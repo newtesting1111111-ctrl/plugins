@@ -201,32 +201,58 @@ const reviewSlides = [...reviewTrack.querySelectorAll(".review-slide")];
 const reviewPrevious = document.querySelector("#review-prev");
 const reviewNext = document.querySelector("#review-next");
 const reviewCurrent = document.querySelector("#review-current");
+const reviewCounter = document.querySelector(".review-counter");
 let reviewIndex = 0;
 let reviewScrollTimeout;
+function getReviewLayout() {
+  const cardWidth = reviewSlides[0].getBoundingClientRect().width;
+  const gap = parseFloat(getComputedStyle(reviewTrack).columnGap) || 0;
+  const visibleCount = Math.max(
+    1,
+    Math.round((reviewTrack.clientWidth + gap) / (cardWidth + gap)),
+  );
+  return {
+    step: cardWidth + gap,
+    visibleCount,
+    lastIndex: Math.max(0, reviewSlides.length - visibleCount),
+  };
+}
 function updateReviewNavigation(index) {
-  reviewIndex = index;
-  reviewCurrent.textContent = String(index + 1).padStart(2, "0");
-  reviewPrevious.disabled = index === 0;
-  reviewNext.disabled = index === reviewSlides.length - 1;
+  const { visibleCount, lastIndex } = getReviewLayout();
+  reviewIndex = Math.max(0, Math.min(index, lastIndex));
+  const first = String(reviewIndex + 1).padStart(2, "0");
+  const last = String(reviewIndex + visibleCount).padStart(2, "0");
+  reviewCurrent.textContent = visibleCount > 1 ? `${first}–${last}` : first;
+  reviewCounter.setAttribute(
+    "aria-label",
+    visibleCount > 1
+      ? `Отзывы ${reviewIndex + 1}–${reviewIndex + visibleCount} из ${reviewSlides.length}`
+      : `Отзыв ${reviewIndex + 1} из ${reviewSlides.length}`,
+  );
+  reviewPrevious.disabled = reviewIndex === 0;
+  reviewNext.disabled = reviewIndex === lastIndex;
 }
 function showReview(index, animate = true) {
-  const next = Math.max(0, Math.min(index, reviewSlides.length - 1));
-  updateReviewNavigation(next);
+  updateReviewNavigation(index);
   reviewTrack.scrollTo({
-    left: next * reviewTrack.clientWidth,
+    left: reviewIndex * getReviewLayout().step,
     behavior: animate && !motionPreference.matches ? "smooth" : "instant",
   });
 }
 document.querySelector(".review-navigation").hidden = false;
 document.querySelector(".review-controls").hidden = false;
-reviewPrevious.addEventListener("click", () => showReview(reviewIndex - 1));
-reviewNext.addEventListener("click", () => showReview(reviewIndex + 1));
+reviewPrevious.addEventListener("click", () =>
+  showReview(reviewIndex - getReviewLayout().visibleCount),
+);
+reviewNext.addEventListener("click", () =>
+  showReview(reviewIndex + getReviewLayout().visibleCount),
+);
 reviewTrack.addEventListener("keydown", (event) => {
   const targets = {
-    ArrowLeft: reviewIndex - 1,
-    ArrowRight: reviewIndex + 1,
+    ArrowLeft: reviewIndex - getReviewLayout().visibleCount,
+    ArrowRight: reviewIndex + getReviewLayout().visibleCount,
     Home: 0,
-    End: reviewSlides.length - 1,
+    End: getReviewLayout().lastIndex,
   };
   if (!(event.key in targets)) return;
   event.preventDefault();
@@ -236,7 +262,7 @@ reviewTrack.addEventListener("scroll", () => {
   clearTimeout(reviewScrollTimeout);
   reviewScrollTimeout = setTimeout(() => {
     updateReviewNavigation(
-      Math.round(reviewTrack.scrollLeft / reviewTrack.clientWidth),
+      Math.round(reviewTrack.scrollLeft / getReviewLayout().step),
     );
   }, 120);
 });
