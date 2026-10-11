@@ -75,10 +75,10 @@ foreach (['name', 'contact', 'service', 'message', 'website', 'context', 'site']
 }
 
 $context = $data['context'] ?? 'web';
-if (!in_array($context, ['web', 'seo'], true)) {
+if (!in_array($context, ['web', 'seo', 'ppc'], true)) {
     respond(422, false, 'Выберите услугу через форму на сайте.');
 }
-$formReturnPath = $context === 'seo' ? '/seo/#contact' : '/#contact';
+$formReturnPath = $context === 'web' ? '/#contact' : '/' . $context . '/#contact';
 
 // Ignore the hidden bot field without sending email or using the rate quota.
 if (trim($data['website'] ?? '') !== '') {
@@ -90,9 +90,12 @@ $contact = trim($data['contact'] ?? '');
 $service = trim($data['service'] ?? '');
 $message = trim($data['message'] ?? '');
 $site = trim($data['site'] ?? '');
-$services = $context === 'seo'
-    ? ['Комплексное SEO', 'Локальное SEO', 'SEO интернет-магазина', 'Технический аудит']
-    : ['Лендинг', 'Сайт компании', 'Интернет-магазин', 'Индивидуальное решение'];
+$serviceGroups = [
+    'web' => ['Лендинг', 'Сайт компании', 'Интернет-магазин', 'Индивидуальное решение'],
+    'seo' => ['Комплексное SEO', 'Локальное SEO', 'SEO интернет-магазина', 'Технический аудит'],
+    'ppc' => ['Контекст Start', 'Контекст Standart', 'Контекст Pro', 'Индивидуальный расчёт'],
+];
+$services = $serviceGroups[$context];
 
 if (preg_match('/\A.{1,80}\z/us', $name) !== 1
     || preg_match('/\A.{1,160}\z/us', $contact) !== 1
@@ -161,14 +164,20 @@ if (!$stored) {
 }
 
 date_default_timezone_set('Europe/Minsk');
-$applicationTitle = $context === 'seo' ? 'Заявка на SEO-продвижение' : 'Заявка на разработку сайта';
+$applicationTitles = [
+    'web' => 'Заявка на разработку сайта',
+    'seo' => 'Заявка на SEO-продвижение',
+    'ppc' => 'Заявка на контекстную рекламу',
+];
+$applicationTitle = $applicationTitles[$context];
 $body = $applicationTitle . " — uweb.by\n\n"
     . "Формат: $service\nИмя: $name\nКонтакт: $contact\n"
     . ($site !== '' ? "Сайт: $site\n" : '')
     . "\nО проекте:\n"
     . ($message !== '' ? $message : 'Обсудим при знакомстве.')
     . "\n\nОтправлено: " . date('d.m.Y H:i') . " (Минск)\n";
-$subjectText = $context === 'seo' ? 'Заявка на SEO — uweb.by' : 'Новая заявка — uweb.by';
+$subjects = ['web' => 'Новая заявка — uweb.by', 'seo' => 'Заявка на SEO — uweb.by', 'ppc' => 'Заявка на PPC — uweb.by'];
+$subjectText = $subjects[$context];
 $subject = '=?UTF-8?B?' . base64_encode($subjectText) . '?=';
 $headers = [
     'From: "uweb.by" <' . MAIL_FROM . '>',

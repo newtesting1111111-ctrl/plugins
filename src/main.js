@@ -159,6 +159,28 @@ form.addEventListener("submit", async (event) => {
 });
 document.querySelector("#year").textContent = String(new Date().getFullYear());
 
+// The owner supplied these projects and outcomes. Only the project changes;
+// the PPC chart shows the supplied overall range, not invented monthly figures.
+const casePanel = document.querySelector(".case-panel");
+if (casePanel) {
+  const cases = [...casePanel.querySelectorAll(".project-case")];
+  const caseButtons = [...casePanel.querySelectorAll("[data-case]")];
+  function showCase(index) {
+    cases.forEach((item, current) => {
+      item.hidden = current !== index;
+    });
+    caseButtons.forEach((button, current) => {
+      button.setAttribute("aria-pressed", String(current === index));
+    });
+  }
+  caseButtons.forEach((button, index) => {
+    button.addEventListener("click", () => showCase(index));
+  });
+  casePanel.dataset.enhanced = "true";
+  casePanel.querySelector(".case-navigation").hidden = false;
+  showCase(0);
+}
+
 // Reveal each section once; content stays visible without JavaScript or with
 // reduced motion enabled. Native <details> also works without JavaScript.
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -261,7 +283,7 @@ new ResizeObserver(() => showReview(reviewIndex, false)).observe(reviewTrack);
 
 if (!motionPreference.matches && "IntersectionObserver" in window) {
   const revealTargets = document.querySelectorAll(
-    ".approach-grid > *, .pricing-heading, .price-item, .process-step, .handoff-copy, .handoff-visual, .reviews-intro, .review-carousel, .faq-intro, .faq-list, .contact-copy, .project-form",
+    ".approach-grid > *, .results-heading, .case-panel, .pricing-heading, .price-item, .process-step, .handoff-copy, .handoff-visual, .reviews-intro, .review-carousel, .faq-intro, .faq-list, .contact-copy, .project-form",
   );
   const observer = new IntersectionObserver(
     (entries) => {

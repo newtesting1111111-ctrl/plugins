@@ -1,4 +1,8 @@
 /* The SEO page shares the site's palette, typography and interactive components. */
+.seo-page .hero h1,
+.seo-page .hero h1 .serif {
+  font-weight: 700;
+}
 .seo-picture {
   position: relative;
   width: 100%;
@@ -202,6 +206,9 @@
   }
 }
 @media (max-width: 650px) {
+  .seo-picture.is-unavailable {
+    min-height: 340px;
+  }
   .seo-page .price-row {
     grid-template-columns: 22px minmax(0, 1fr) 33px;
   }

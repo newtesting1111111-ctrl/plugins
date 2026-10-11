@@ -152,6 +152,30 @@ with (root / 'messages.jsonl').open('a') as output:
         self.assertIn('href="/seo/#contact"', body)
         self.assertEqual(len(self.messages()), 1)
 
+    def test_ppc_tariffs_have_their_own_subject_and_service(self):
+        services = ["Контекст Start", "Контекст Standart", "Контекст Pro", "Индивидуальный расчёт"]
+        for service in services:
+            with self.subTest(service=service):
+                self.assertEqual(self.request(self.payload(
+                    context="ppc", service=service, site="https://example.by/", message="Реклама в Минске."))[0], 200)
+        for captured, service in zip(self.messages(), services):
+            mail = BytesParser(policy=email.policy.default).parsebytes(captured["mail"].encode())
+            self.assertEqual(str(mail["Subject"]), "Заявка на PPC — uweb.by")
+            self.assertEqual(mail["To"], "sitehub24@gmail.com")
+            self.assertEqual(mail["From"].addresses[0].addr_spec, "info@uweb.by")
+            self.assertIn("Заявка на контекстную рекламу", mail.get_content())
+            self.assertIn("Формат: " + service, mail.get_content())
+            self.assertIn("Сайт: https://example.by/", mail.get_content())
+
+    def test_ppc_native_post_and_service_group_validation(self):
+        self.assertEqual(self.request(self.payload(context="ppc", service="Лендинг"))[0], 422)
+        self.assertEqual(self.request(self.payload(context="seo", service="Контекст Start"))[0], 422)
+        self.assertEqual(self.request(self.payload(service="Контекст Start"))[0], 422)
+        status, body, _ = self.request(self.payload(context="ppc", service="Контекст Pro"), form=True)
+        self.assertEqual(status, 200)
+        self.assertIn('href="/ppc/#contact"', body)
+        self.assertEqual(len(self.messages()), 1)
+
     def test_invalid_fields_and_header_injection_are_rejected(self):
         for fields in [{"name": " "}, {"contact": ""}, {"name": ["Анна"]},
                        {"name": "а" * 81}, {"contact": "а" * 161},

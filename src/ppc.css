@@ -1,0 +1,38 @@
+.ppc-page .desktop-nav {
+  gap: 22px;
+}
+.ppc-plan-link {
+  margin-top: 28px;
+  color: var(--blue);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.ppc-budget {
+  display: grid;
+  grid-template-columns: 1fr 36px 1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 28px 0;
+  border-bottom: 1px solid #485878;
+}
+.ppc-budget-label {
+  font-size: 14px;
+  letter-spacing: 0.025em;
+  color: #c3cde6;
+}
+.ppc-budget p {
+  font-size: 16px;
+  line-height: 1.7;
+  margin: 12px 0 0;
+  max-width: 440px;
+}
+.ppc-budget-plus {
+  color: var(--accent-soft);
+  font-size: 32px;
+  justify-self: center;
+}
+@media (max-width: 1100px) {
+  .ppc-page .desktop-nav {
+    gap: 14px;
+  }
+}

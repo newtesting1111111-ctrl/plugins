@@ -7,6 +7,7 @@ export default defineConfig({
       input: {
         home: fileURLToPath(new URL("./index.html", import.meta.url)),
         seo: fileURLToPath(new URL("./seo/index.html", import.meta.url)),
+        ppc: fileURLToPath(new URL("./ppc/index.html", import.meta.url)),
       },
     },
   },
