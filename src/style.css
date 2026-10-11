@@ -308,177 +308,41 @@ textarea:focus-visible {
 }
 .hero-visual {
   position: relative;
-  padding: 36px 0 24px;
+  padding: 50px 0 0;
   min-width: 0;
+  margin: 0;
 }
-.showcase {
+.portrait-photo {
   position: relative;
-  transform: rotate(3deg);
-  border: 1px solid #c0beb5;
-  background: #fffaf2;
-  border-radius: 10px;
-  box-shadow: 0 17px 30px -12px #44472d22;
+}
+.portrait-frame {
   overflow: hidden;
-  width: 96%;
-  margin-left: 3%;
+  border: 6px solid #fffdf7;
+  border-radius: 42px 16px 42px 16px;
+  background: #e0e7ff;
+  transform: rotate(2deg);
+  box-shadow: 0 18px 36px -18px #36364b40;
 }
-.browser-bar {
-  height: 33px;
-  background: #faf9f6;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding-inline: 12px;
-  border-bottom: 1px solid #b4b5c7;
-  font-family: Arial, sans-serif;
-  font-size: 8px;
-  color: #616353;
-}
-.browser-bar > span:not(.browser-plus) {
-  height: 5px;
-  width: 5px;
-  background: #d4d4ca;
-  border-radius: 50%;
-}
-.browser-bar > div {
-  margin-left: auto;
-  margin-right: auto;
-  background: #eeeee8;
-  width: 58%;
-  text-align: center;
-  padding: 3px;
-  border-radius: 3px;
-}
-.browser-plus {
-  font-size: 16px;
-}
-.concept-site {
-  background: var(--lavender);
-  color: #30302c;
-}
-.concept-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-inline: 26px;
-  height: 65px;
-  border-bottom: 1px solid #9e9fc288;
-  font-size: 7px;
-}
-.concept-nav strong {
-  font-size: 22px;
-  letter-spacing: -1.1px;
-}
-.concept-nav strong span {
-  font-size: 17px;
-  padding-left: 4px;
-}
-.concept-menu {
-  font-size: 12px;
-}
-.concept-content {
-  position: relative;
-  padding: 35px 26px 45px;
-  overflow: hidden;
-}
-.concept-kicker {
-  font-size: 6px;
-  letter-spacing: 1.1px;
-  font-weight: 500;
-}
-.concept-title {
-  font-size: 44px;
-  font-weight: 500;
-  letter-spacing: -2.6px;
-  line-height: 1.1;
-  margin: 19px 0 14px;
-  position: relative;
-  z-index: 2;
-}
-.concept-title em {
-  font-family: Georgia, serif;
-  font-weight: 400;
-}
-.concept-content p {
-  font-size: 9px;
-  line-height: 1.6;
-  position: relative;
-  z-index: 2;
-  margin-bottom: 20px;
-}
-.concept-link {
-  display: inline-flex;
-  font-size: 7px;
-  border-bottom: 1px solid #30302c;
-  padding: 6px 0;
-  gap: 20px;
-  position: relative;
-  z-index: 2;
-}
-.concept-link b {
-  font-size: 13px;
-}
-.flower {
-  width: 63%;
-  height: auto;
-  position: absolute;
-  right: -13%;
-  top: 26px;
-  transform: rotate(-12deg);
-}
-.concept-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #f1efdf;
-  padding: 25px 26px;
-  font-size: 13px;
-  line-height: 1.5;
-  letter-spacing: -0.3px;
-}
-.concept-bottom strong {
-  font-weight: 500;
-}
-.concept-pill {
-  font-size: 7px;
-  background: #31332d;
-  color: #faf8e9;
-  border-radius: 20px;
-  padding: 10px 14px;
-  letter-spacing: 0;
-}
-.floating-sticker {
-  position: absolute;
-  left: -18px;
-  bottom: 21px;
-  background: var(--lime);
-  color: var(--ink);
-  padding: 17px 21px 18px;
-  transform: rotate(-9deg);
-  font-size: 13px;
-  line-height: 1.25;
-  box-shadow: 0 5px 10px #35352412;
-}
-.floating-sticker > span {
+.developer-photo {
   display: block;
-  font-size: 28px;
-  line-height: 1.1;
-  margin-bottom: 7px;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
 }
-.visual-top-note {
+.portrait-note {
   position: absolute;
-  top: -14px;
-  right: 24px;
+  top: -5px;
+  right: 25px;
   display: flex;
-  gap: 13px;
   align-items: center;
+  gap: 13px;
   font-family: Georgia, serif;
-  font-size: 16px;
+  font-size: 18px;
   font-style: italic;
-  transform: rotate(5deg);
   line-height: 1.1;
+  transform: rotate(5deg);
 }
-.visual-top-note svg {
+.portrait-note svg {
   height: 42px;
   width: 75px;
   stroke: var(--ink);
@@ -487,20 +351,40 @@ textarea:focus-visible {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.visual-caption {
-  display: flex;
-  justify-content: flex-end;
+.portrait-badge {
+  position: absolute;
+  left: -12px;
+  bottom: -14px;
+  display: inline-flex;
   align-items: center;
-  gap: 70px;
-  font-size: 8px;
-  letter-spacing: 1.1px;
-  margin-top: 30px;
-  margin-right: 9px;
+  gap: 9px;
+  padding: 14px 19px;
+  border-radius: 40px;
+  background: var(--lime);
+  color: var(--ink);
+  box-shadow: 0 5px 12px #35352415;
+  font-size: 12px;
+  font-weight: 500;
+  transform: rotate(-7deg);
+}
+.portrait-caption {
+  margin-top: 38px;
+  padding-left: 12px;
+  max-width: 440px;
+}
+.portrait-label {
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
   color: var(--muted);
 }
-.visual-caption > span:last-child {
-  font-size: 22px;
-  color: var(--ink);
+.portrait-caption p {
+  margin: 11px 0 0;
+  font-size: clamp(20px, 1.85vw, 26px);
+  line-height: 1.35;
+  letter-spacing: -0.8px;
+  font-weight: 500;
 }
 .benefit-strip {
   border-block: 1px solid var(--line);
@@ -1055,19 +939,6 @@ summary::-webkit-details-marker {
   .hero h1 {
     font-size: 122px;
   }
-  .concept-content {
-    padding-top: 46px;
-    padding-bottom: 56px;
-  }
-  .concept-title {
-    font-size: 50px;
-  }
-  .flower {
-    top: 20px;
-  }
-  .concept-bottom {
-    padding-block: 30px;
-  }
   .hero-visual {
     padding-top: 50px;
   }
@@ -1108,29 +979,6 @@ summary::-webkit-details-marker {
   .hero-actions .text-link {
     font-size: 11px;
     gap: 8px;
-  }
-  .concept-title {
-    font-size: 37px;
-  }
-  .concept-nav {
-    margin-inline: 20px;
-  }
-  .concept-content {
-    padding: 29px 20px 36px;
-  }
-  .concept-bottom {
-    padding: 22px 20px;
-    font-size: 11px;
-  }
-  .flower {
-    width: 65%;
-    top: 35px;
-    right: -17%;
-  }
-  .floating-sticker {
-    left: -8px;
-    font-size: 11px;
-    padding: 13px 17px;
   }
   .approach-grid,
   .contact-grid {
@@ -1231,42 +1079,6 @@ summary::-webkit-details-marker {
   }
   .hero-footnote {
     font-size: 8px;
-  }
-  .concept-title {
-    font-size: 32px;
-  }
-  .concept-nav {
-    height: 54px;
-  }
-  .concept-content {
-    padding-block: 27px 28px;
-  }
-  .concept-content p {
-    font-size: 8px;
-  }
-  .concept-bottom {
-    font-size: 10px;
-    padding: 18px;
-  }
-  .flower {
-    right: -22%;
-    width: 70%;
-  }
-  .concept-nav > span:nth-child(2) {
-    display: none;
-  }
-  .floating-sticker {
-    font-size: 10px;
-    bottom: 29px;
-  }
-  .visual-top-note {
-    right: 12px;
-    font-size: 13px;
-    top: 0;
-  }
-  .visual-caption {
-    font-size: 7px;
-    gap: 30px;
   }
   .benefit-strip {
     grid-template-columns: 1fr 1fr;
@@ -1412,60 +1224,30 @@ summary::-webkit-details-marker {
     width: 100%;
     max-width: 440px;
     justify-self: center;
-    padding: 26px 12px 14px;
+    padding: 40px 6px 0;
   }
-  .showcase {
-    width: 95%;
-    margin-left: 3%;
+  .portrait-note {
+    top: -7px;
+    right: 18px;
+    font-size: 15px;
   }
-  .visual-top-note {
-    font-size: 13px;
-    right: 16px;
-    top: -14px;
+  .portrait-frame {
+    border-width: 4px;
+    border-radius: 30px 12px 30px 12px;
   }
-  .concept-nav {
-    height: 58px;
-    margin-inline: 23px;
-  }
-  .concept-nav strong {
-    font-size: 23px;
-  }
-  .concept-nav > span:nth-child(2) {
-    display: block;
-    font-size: 6px;
-  }
-  .concept-content {
-    padding: 30px 23px 33px;
-  }
-  .concept-title {
-    font-size: 41px;
-    margin-top: 19px;
-  }
-  .concept-content p {
-    font-size: 9px;
-  }
-  .concept-kicker {
-    font-size: 6px;
-  }
-  .flower {
-    right: -14%;
-    top: 35px;
-    width: 65%;
-  }
-  .concept-bottom {
-    padding: 23px;
-    font-size: 12px;
-  }
-  .floating-sticker {
-    left: 0;
+  .portrait-badge {
+    left: -4px;
+    bottom: -12px;
+    padding: 12px 16px;
     font-size: 11px;
-    bottom: 19px;
-    padding: 15px 17px;
   }
-  .visual-caption {
-    font-size: 7px;
-    margin-top: 24px;
-    gap: 44px;
+  .portrait-caption {
+    margin-top: 32px;
+    padding-left: 2px;
+  }
+  .portrait-caption p {
+    font-size: 23px;
+    letter-spacing: -0.7px;
   }
   .benefit-strip {
     padding-block: 25px;
@@ -1749,17 +1531,6 @@ summary::-webkit-details-marker {
   .hero-footnote {
     font-size: 8px;
   }
-  .concept-title {
-    font-size: 34px;
-  }
-  .concept-bottom {
-    font-size: 10px;
-    padding: 19px;
-  }
-  .concept-pill {
-    font-size: 6px;
-    padding: 9px 11px;
-  }
   .contact-copy h2 {
     font-size: 50px;
   }
@@ -1859,11 +1630,6 @@ summary::-webkit-details-marker {
 }
 .arrow-top {
   transform: rotate(-45deg);
-}
-.concept-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
 }
 .approach-point p,
 .process-step p,
@@ -2095,7 +1861,7 @@ summary::-webkit-details-marker {
   }
 }
 
-/* Motion supports the content: small entrances, gentle illustration movement. */
+/* Gentle entrances and a small moving badge respect reduced-motion settings. */
 @keyframes hero-arrive {
   from {
     opacity: 0;
@@ -2106,32 +1872,23 @@ summary::-webkit-details-marker {
     transform: translateY(0);
   }
 }
-@keyframes showcase-arrive {
+@keyframes portrait-arrive {
   from {
     opacity: 0;
     transform: rotate(0deg) translateY(25px);
   }
   to {
     opacity: 1;
-    transform: rotate(3deg) translateY(0);
+    transform: rotate(2deg) translateY(0);
   }
 }
-@keyframes flower-sway {
+@keyframes portrait-badge-float {
   0%,
   100% {
-    transform: rotate(-12deg);
+    transform: rotate(-7deg) translateY(0);
   }
   50% {
-    transform: rotate(-7deg) translateY(-5px);
-  }
-}
-@keyframes sticker-float {
-  0%,
-  100% {
-    transform: rotate(-9deg) translateY(0);
-  }
-  50% {
-    transform: rotate(-7deg) translateY(-6px);
+    transform: rotate(-5deg) translateY(-4px);
   }
 }
 .scroll-reveal {
@@ -2146,6 +1903,15 @@ summary::-webkit-details-marker {
   transform: none;
 }
 @media (prefers-reduced-motion: no-preference) {
+  .portrait-frame {
+    animation: portrait-arrive 0.9s 0.15s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  }
+  .portrait-badge {
+    animation: portrait-badge-float 6s ease-in-out infinite;
+  }
+  .portrait-caption {
+    animation: hero-arrive 0.65s 0.4s ease both;
+  }
   .hero-copy > .eyebrow {
     animation: hero-arrive 0.65s ease both;
   }
@@ -2160,16 +1926,6 @@ summary::-webkit-details-marker {
   }
   .hero-footnote {
     animation: hero-arrive 0.65s 0.42s ease both;
-  }
-  .showcase {
-    animation: showcase-arrive 0.9s 0.15s cubic-bezier(0.2, 0.7, 0.3, 1) both;
-  }
-  .flower {
-    transform-origin: 70% 70%;
-    animation: flower-sway 7s ease-in-out infinite;
-  }
-  .floating-sticker {
-    animation: sticker-float 6s ease-in-out infinite;
   }
   .button:hover .icon-arrow {
     transform: translate(1px, -1px);
