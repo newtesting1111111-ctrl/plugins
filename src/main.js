@@ -2,7 +2,9 @@ import { contactConfig } from "./config.js";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
-// Keep the supplied remote illustration; show the decorative search window
+let smoothScroll;
+
+// Keep the supplied illustration; show the decorative search window
 // only when that image cannot load. Works if the error happened before this script.
 const seoImage = document.querySelector(".seo-hero-image");
 if (seoImage) {
@@ -73,6 +75,61 @@ document.addEventListener("keydown", (event) => {
 });
 quickContact.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", () => closeQuickContact(true));
+});
+
+// Reuse the same contact links in the menu dialog and the floating widget.
+// Native dialog provides focus containment and Escape; links still work without JS.
+const contactDialog = document.createElement("dialog");
+contactDialog.id = "contact-dialog";
+contactDialog.className = "contact-modal";
+contactDialog.setAttribute("aria-labelledby", "contact-dialog-title");
+contactDialog.setAttribute("data-lenis-prevent", "");
+const dialogClose = document.createElement("button");
+dialogClose.type = "button";
+dialogClose.className = "contact-modal-close";
+dialogClose.setAttribute("aria-label", "Закрыть контакты");
+dialogClose.autofocus = true;
+dialogClose.innerHTML = '<span aria-hidden="true">×</span>';
+const dialogOptions = quickContact.querySelector(".contact-options").cloneNode(true);
+dialogOptions.id = "contact-dialog-options";
+dialogOptions.setAttribute("aria-label", "Способы связи");
+dialogOptions.querySelector(".contact-options-title").id = "contact-dialog-title";
+contactDialog.append(dialogClose, dialogOptions);
+document.body.append(contactDialog);
+let contactOpener;
+document.querySelectorAll("[data-contact-modal]").forEach((link) => {
+  link.setAttribute("aria-haspopup", "dialog");
+  link.setAttribute("aria-controls", contactDialog.id);
+  link.addEventListener("click", (event) => {
+    if (typeof contactDialog.showModal !== "function") return;
+    event.preventDefault();
+    contactOpener = link;
+    closeMenu();
+    closeQuickContact();
+    contactDialog.showModal();
+    document.documentElement.classList.add("contact-modal-open");
+    smoothScroll?.stop();
+  });
+});
+dialogClose.addEventListener("click", () => contactDialog.close());
+contactDialog.addEventListener("click", (event) => {
+  const bounds = contactDialog.getBoundingClientRect();
+  if (
+    event.target === contactDialog &&
+    (event.clientX < bounds.left || event.clientX > bounds.right ||
+      event.clientY < bounds.top || event.clientY > bounds.bottom)
+  ) contactDialog.close();
+});
+dialogOptions.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => contactDialog.close());
+});
+contactDialog.addEventListener("close", () => {
+  document.documentElement.classList.remove("contact-modal-open");
+  smoothScroll?.start();
+  const focusTarget = mobileMenu.contains(contactOpener) || !contactOpener?.getClientRects().length
+    ? menuButton
+    : contactOpener;
+  focusTarget?.focus({ preventScroll: true });
 });
 
 document.querySelectorAll("[data-service]").forEach((link) => {
@@ -185,7 +242,6 @@ if (casePanel) {
 // reduced motion enabled. Native <details> also works without JavaScript.
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
 const desktopPointer = window.matchMedia("(pointer: fine)");
-let smoothScroll;
 function updateSmoothScroll() {
   if (motionPreference.matches || !desktopPointer.matches) {
     smoothScroll?.destroy();
@@ -199,9 +255,10 @@ function updateSmoothScroll() {
       smoothWheel: true,
       syncTouch: false,
       anchors: true,
-      prevent: (node) => node.matches("textarea, #quick-contact, #mobile-menu"),
+      prevent: (node) => node.matches("textarea, #quick-contact, #mobile-menu, .contact-modal"),
     });
   }
+  if (contactDialog.open) smoothScroll.stop();
 }
 updateSmoothScroll();
 motionPreference.addEventListener("change", updateSmoothScroll);
