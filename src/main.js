@@ -73,7 +73,7 @@ form.addEventListener("submit", (event) => {
   briefStatus.textContent = "";
   sendBrief.hidden = true;
   if (hasEmail) {
-    sendBrief.href = `mailto:${email}?subject=${encodeURIComponent("Заявка на разработку сайта — forma")}&body=${encodeURIComponent(brief)}`;
+    sendBrief.href = `mailto:${email}?subject=${encodeURIComponent("Заявка на разработку сайта — uweb.by")}&body=${encodeURIComponent(brief)}`;
     sendBrief.hidden = false;
     sendBrief.replaceChildren(
       "Открыть письмо ",
@@ -130,9 +130,39 @@ document.querySelector("#download-brief").addEventListener("click", () => {
   );
   const link = document.createElement("a");
   link.href = url;
-  link.download = "forma-project-brief.txt";
+  link.download = "uweb-project-brief.txt";
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
   briefStatus.textContent = "Бриф сохранён в текстовый файл.";
 });
 document.querySelector("#year").textContent = String(new Date().getFullYear());
+
+// Reveal each section once; content stays visible without JavaScript or with
+// reduced motion enabled. Native <details> also works without JavaScript.
+const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+if (!motionPreference.matches && "IntersectionObserver" in window) {
+  const revealTargets = document.querySelectorAll(
+    ".approach-grid > *, .pricing-heading, .price-item, .process-step, .faq-intro, .faq-list, .contact-copy, .project-form",
+  );
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08 },
+  );
+  revealTargets.forEach((target) => {
+    target.classList.add("scroll-reveal");
+    observer.observe(target);
+  });
+  motionPreference.addEventListener("change", (event) => {
+    if (event.matches) {
+      revealTargets.forEach((target) => target.classList.add("is-visible"));
+      observer.disconnect();
+    }
+  });
+}

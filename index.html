@@ -8,10 +8,12 @@
       name="description"
       content="Разработка сайтов с характером: лендинги от 400 BYN, сайты компаний от 700 BYN, интернет-магазины от 900 BYN. Обсудим вашу задачу и подберём решение."
     />
-    <title>forma — сайты с характером</title>
+    <title>uweb.by — сайты с характером</title>
+    <link rel="canonical" href="https://uweb.by/" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
-    <meta property="og:title" content="forma — сайты с характером" />
+    <meta property="og:title" content="uweb.by — сайты с характером" />
+    <meta property="og:url" content="https://uweb.by/" />
     <meta
       property="og:description"
       content="Разработка сайтов для вашего бизнеса. Лендинг от 400 BYN, сайт компании от 700 BYN, интернет-магазин от 900 BYN."
@@ -58,11 +60,20 @@
           stroke-linecap="round"
         />
       </symbol>
+      <symbol id="plus-icon" viewBox="0 0 24 24">
+        <path
+          d="M12 5v14M5 12h14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+      </symbol>
     </svg>
     <a class="skip-link" href="#main">К содержимому</a>
     <header class="header wrap">
-      <a href="#" class="logo" aria-label="forma — на главную"
-        >forma<span class="logo-dot">.</span
+      <a href="#" class="logo" aria-label="uweb.by — на главную"
+        >uweb<span class="logo-dot">.</span><span class="logo-tld">by</span
         ><span class="logo-caption">сайты с характером</span></a
       >
       <nav class="desktop-nav" aria-label="Основная навигация">
@@ -70,7 +81,7 @@
         ><a href="#process">Как работаем</a>
       </nav>
       <a class="header-cta" href="#contact"
-        >Давайте знакомиться
+        >Обсудить сайт
         <span aria-hidden="true"
           ><svg class="icon icon-arrow" aria-hidden="true">
             <use href="#arrow-icon" /></svg></span
@@ -265,7 +276,7 @@
       </section>
 
       <div class="benefit-strip wrap">
-        <p>Хороший сайт —<br /><strong>больше, чем картинка.</strong></p>
+        <p>Хороший сайт — <br /><strong>больше, чем картинка.</strong></p>
         <div>
           <svg viewBox="0 0 32 32" aria-hidden="true">
             <path d="m4 24 9-9 6 5 9-15M18 5h10v10" /></svg
@@ -281,6 +292,14 @@
           <svg viewBox="0 0 32 32" aria-hidden="true">
             <path d="m16 2 4 9 10 5-10 4-4 10-4-10-10-4 10-5Z" /></svg
           ><span>Запоминается.<br />И остаётся вашим.</span>
+        </div>
+        <div>
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path
+              d="M12 21 21 12M8 18l-4 1 5-8 5 1M14 24l-1 4 8-5-1-5M11 21C12 11 20 4 28 4c0 8-7 16-17 17ZM8 24l-4 4"
+            />
+            <circle cx="22" cy="10" r="2" /></svg
+          ><span>Помогаем<br />с запуском</span>
         </div>
       </div>
 
@@ -342,65 +361,240 @@
             </h2>
             <p>
               От одной сильной страницы<br />до целой цифровой истории.<br />Выберите,
-              с чего начнём.
+              с чего начнём.<br /><span class="pricing-hint"
+                >Нажмите на формат — расскажем подробнее.</span
+              >
             </p>
           </div>
           <div class="price-list">
-            <a href="#contact" class="price-row" data-service="Лендинг"
-              ><span class="price-number">01</span>
-              <div class="price-name">
-                <h3>Лендинг</h3>
-                <p>Одна страница. Одна цель. Всё внимание — вашей услуге.</p>
+            <details
+              class="price-item"
+              name="site-formats"
+              data-format="landing"
+            >
+              <summary class="price-row" aria-controls="price-detail-landing">
+                <span class="price-number">01</span>
+                <span class="price-name"
+                  ><span class="price-title">Лендинг</span
+                  ><span class="price-description"
+                    >Одна страница. Одна цель. Всё внимание — вашей
+                    услуге.</span
+                  ></span
+                >
+                <span class="price-amount"
+                  ><small>от</small> 400 <span>BYN</span></span
+                ><span class="price-arrow" aria-hidden="true"
+                  ><svg class="icon icon-plus" aria-hidden="true">
+                    <use href="#plus-icon" /></svg
+                ></span>
+              </summary>
+              <div class="price-detail" id="price-detail-landing">
+                <div class="price-detail-copy">
+                  <p class="detail-label">КОМУ ПОДОЙДЁТ</p>
+                  <p>
+                    Для отдельной услуги, продукта или рекламной кампании.
+                    Собираем всю важную информацию на одной странице и ведём
+                    посетителя к конкретному действию.
+                  </p>
+                </div>
+                <div class="price-detail-scope">
+                  <h3>Что продумываем и собираем</h3>
+                  <ul>
+                    <li>Структура страницы с понятным предложением</li>
+                    <li>Индивидуальный дизайн и адаптивная вёрстка</li>
+                    <li>Блоки об услуге, преимуществах и условиях</li>
+                    <li>Форма обращения и контактные ссылки</li>
+                  </ul>
+                </div>
+                <div class="price-detail-footer">
+                  <p>
+                    Количество блоков, материалы и дополнительные интеграции
+                    согласуем до начала работы.
+                  </p>
+                  <a
+                    class="button button-lime"
+                    href="#contact"
+                    data-service="Лендинг"
+                    >Обсудить лендинг<span
+                      class="button-arrow"
+                      aria-hidden="true"
+                      ><svg class="icon icon-arrow" aria-hidden="true">
+                        <use href="#arrow-icon" /></svg></span
+                  ></a>
+                </div>
               </div>
-              <span class="price-amount"
-                ><small>от</small> 400 <span>BYN</span></span
-              ><span class="price-arrow" aria-hidden="true"
-                ><svg class="icon icon-arrow" aria-hidden="true">
-                  <use href="#arrow-icon" /></svg></span
-            ></a>
-            <a href="#contact" class="price-row" data-service="Сайт компании"
-              ><span class="price-number">02</span>
-              <div class="price-name">
-                <h3>Сайт компании</h3>
-                <p>Расскажите, кто вы, что делаете и почему вам доверять.</p>
+            </details>
+            <details
+              class="price-item"
+              name="site-formats"
+              data-format="company"
+            >
+              <summary class="price-row" aria-controls="price-detail-company">
+                <span class="price-number">02</span>
+                <span class="price-name"
+                  ><span class="price-title">Сайт компании</span
+                  ><span class="price-description"
+                    >Расскажите, кто вы, что делаете и почему вам
+                    доверять.</span
+                  ></span
+                >
+                <span class="price-amount"
+                  ><small>от</small> 700 <span>BYN</span></span
+                ><span class="price-arrow" aria-hidden="true"
+                  ><svg class="icon icon-plus" aria-hidden="true">
+                    <use href="#plus-icon" /></svg
+                ></span>
+              </summary>
+              <div class="price-detail" id="price-detail-company">
+                <div class="price-detail-copy">
+                  <p class="detail-label">КОМУ ПОДОЙДЁТ</p>
+                  <p>
+                    Для бизнеса, о котором не рассказать одной страницей.
+                    Помогаем представить компанию, раскрыть услуги и дать
+                    клиенту нужную информацию без долгих поисков.
+                  </p>
+                </div>
+                <div class="price-detail-scope">
+                  <h3>Что продумываем и собираем</h3>
+                  <ul>
+                    <li>Разделы о компании, услугах и контактах</li>
+                    <li>Общий визуальный стиль для всех страниц</li>
+                    <li>Понятная навигация между разделами</li>
+                    <li>Адаптация под телефон и формы обращения</li>
+                  </ul>
+                </div>
+                <div class="price-detail-footer">
+                  <p>
+                    Число страниц, публикацию кейсов и возможность
+                    редактирования контента обсудим отдельно.
+                  </p>
+                  <a
+                    class="button button-lime"
+                    href="#contact"
+                    data-service="Сайт компании"
+                    >Обсудить сайт компании<span
+                      class="button-arrow"
+                      aria-hidden="true"
+                      ><svg class="icon icon-arrow" aria-hidden="true">
+                        <use href="#arrow-icon" /></svg></span
+                  ></a>
+                </div>
               </div>
-              <span class="price-amount"
-                ><small>от</small> 700 <span>BYN</span></span
-              ><span class="price-arrow" aria-hidden="true"
-                ><svg class="icon icon-arrow" aria-hidden="true">
-                  <use href="#arrow-icon" /></svg></span
-            ></a>
-            <a href="#contact" class="price-row" data-service="Интернет-магазин"
-              ><span class="price-number">03</span>
-              <div class="price-name">
-                <h3>Интернет-магазин</h3>
-                <p>От знакомства с товаром до покупки — удобно и понятно.</p>
+            </details>
+            <details class="price-item" name="site-formats" data-format="shop">
+              <summary class="price-row" aria-controls="price-detail-shop">
+                <span class="price-number">03</span>
+                <span class="price-name"
+                  ><span class="price-title">Интернет-магазин</span
+                  ><span class="price-description"
+                    >От знакомства с товаром до покупки — удобно и
+                    понятно.</span
+                  ></span
+                >
+                <span class="price-amount"
+                  ><small>от</small> 900 <span>BYN</span></span
+                ><span class="price-arrow" aria-hidden="true"
+                  ><svg class="icon icon-plus" aria-hidden="true">
+                    <use href="#plus-icon" /></svg
+                ></span>
+              </summary>
+              <div class="price-detail" id="price-detail-shop">
+                <div class="price-detail-copy">
+                  <p class="detail-label">КОМУ ПОДОЙДЁТ</p>
+                  <p>
+                    Для продажи товаров онлайн. Продумываем путь от каталога до
+                    заказа: покупатель должен легко найти товар, разобраться в
+                    деталях и перейти к покупке.
+                  </p>
+                </div>
+                <div class="price-detail-scope">
+                  <h3>Что продумываем и собираем</h3>
+                  <ul>
+                    <li>Каталог с категориями товаров</li>
+                    <li>Карточки товара с фото и описанием</li>
+                    <li>Корзина и сценарий оформления заказа</li>
+                    <li>Удобная мобильная версия магазина</li>
+                  </ul>
+                </div>
+                <div class="price-detail-footer">
+                  <p>
+                    Онлайн-оплата, доставка, загрузка товаров и интеграции с
+                    учётными системами оцениваются после обсуждения.
+                  </p>
+                  <a
+                    class="button button-lime"
+                    href="#contact"
+                    data-service="Интернет-магазин"
+                    >Обсудить магазин<span
+                      class="button-arrow"
+                      aria-hidden="true"
+                      ><svg class="icon icon-arrow" aria-hidden="true">
+                        <use href="#arrow-icon" /></svg></span
+                  ></a>
+                </div>
               </div>
-              <span class="price-amount"
-                ><small>от</small> 900 <span>BYN</span></span
-              ><span class="price-arrow" aria-hidden="true"
-                ><svg class="icon icon-arrow" aria-hidden="true">
-                  <use href="#arrow-icon" /></svg></span
-            ></a>
-            <a
-              href="#contact"
-              class="price-row custom-row"
-              data-service="Индивидуальное решение"
-              ><span class="price-number">04</span>
-              <div class="price-name">
-                <h3>
-                  Что-то особенное<span
-                    ><svg class="icon icon-star" aria-hidden="true">
-                      <use href="#star-icon" /></svg
-                  ></span>
-                </h3>
-                <p>Сложная задача или смелая идея? Найдём свою форму.</p>
+            </details>
+            <details
+              class="price-item"
+              name="site-formats"
+              data-format="custom"
+            >
+              <summary
+                class="price-row custom-row"
+                aria-controls="price-detail-custom"
+              >
+                <span class="price-number">04</span>
+                <span class="price-name"
+                  ><span class="price-title"
+                    >Что-то особенное<span aria-hidden="true"
+                      ><svg class="icon icon-star" aria-hidden="true">
+                        <use href="#star-icon" /></svg></span></span
+                  ><span class="price-description"
+                    >Сложная задача или смелая идея? Найдём свою форму.</span
+                  ></span
+                >
+                <span class="custom-price">Обсудим вместе</span
+                ><span class="price-arrow" aria-hidden="true"
+                  ><svg class="icon icon-plus" aria-hidden="true">
+                    <use href="#plus-icon" /></svg
+                ></span>
+              </summary>
+              <div class="price-detail" id="price-detail-custom">
+                <div class="price-detail-copy">
+                  <p class="detail-label">КОМУ ПОДОЙДЁТ</p>
+                  <p>
+                    Для задач, которым тесно в стандартном формате: сервис,
+                    личный кабинет, необычный интерфейс или собственный сценарий
+                    работы с клиентами.
+                  </p>
+                </div>
+                <div class="price-detail-scope">
+                  <h3>Что продумываем и собираем</h3>
+                  <ul>
+                    <li>Обсуждение задачи и пользовательских сценариев</li>
+                    <li>Проектирование структуры и интерфейсов</li>
+                    <li>Выбор подходящего способа реализации</li>
+                    <li>Поэтапный план разработки и оценка</li>
+                  </ul>
+                </div>
+                <div class="price-detail-footer">
+                  <p>
+                    Стоимость и сроки индивидуальны. Начнём с вашей идеи,
+                    необходимых функций и приоритетов.
+                  </p>
+                  <a
+                    class="button button-lime"
+                    href="#contact"
+                    data-service="Индивидуальное решение"
+                    >Обсудить мою идею<span
+                      class="button-arrow"
+                      aria-hidden="true"
+                      ><svg class="icon icon-arrow" aria-hidden="true">
+                        <use href="#arrow-icon" /></svg></span
+                  ></a>
+                </div>
               </div>
-              <span class="custom-price">Обсудим вместе</span
-              ><span class="price-arrow" aria-hidden="true"
-                ><svg class="icon icon-arrow" aria-hidden="true">
-                  <use href="#arrow-icon" /></svg></span
-            ></a>
+            </details>
           </div>
           <p class="pricing-note">
             Стоимость указана «от». Итоговую сумму согласуем после обсуждения
@@ -672,8 +866,8 @@
       ></a>
     </div>
     <footer class="footer wrap">
-      <a class="logo" href="#" aria-label="forma — наверх"
-        >forma<span class="logo-dot">.</span></a
+      <a class="logo" href="#" aria-label="uweb.by — наверх"
+        >uweb<span class="logo-dot">.</span><span class="logo-tld">by</span></a
       >
       <p>Придаём идеям форму. Сайтам — характер.</p>
       <a href="#main"
@@ -681,7 +875,7 @@
         <span aria-hidden="true"
           ><svg class="icon icon-arrow arrow-top" aria-hidden="true">
             <use href="#arrow-icon" /></svg></span></a
-      ><span class="copyright">© <span id="year">2026</span> forma</span>
+      ><span class="copyright">© <span id="year">2026</span> uweb.by</span>
     </footer>
     <dialog
       id="brief-dialog"
