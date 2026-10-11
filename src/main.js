@@ -1,4 +1,6 @@
 import { contactConfig } from "./config.js";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 
 const menuButton = document.querySelector(".menu-toggle");
 const mobileMenu = document.querySelector("#mobile-menu");
@@ -118,8 +120,10 @@ form.addEventListener("submit", (event) => {
       "Бриф готов. Скопируйте его, откройте Telegram и отправьте нам сообщение.";
   }
   closeQuickContact();
+  smoothScroll?.stop();
   dialog.showModal();
 });
+dialog.addEventListener("close", () => smoothScroll?.start());
 
 document
   .querySelector(".dialog-close")
@@ -165,9 +169,82 @@ document.querySelector("#year").textContent = String(new Date().getFullYear());
 // Reveal each section once; content stays visible without JavaScript or with
 // reduced motion enabled. Native <details> also works without JavaScript.
 const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+const desktopPointer = window.matchMedia("(pointer: fine)");
+let smoothScroll;
+function updateSmoothScroll() {
+  if (motionPreference.matches || !desktopPointer.matches) {
+    smoothScroll?.destroy();
+    smoothScroll = undefined;
+    return;
+  }
+  if (!smoothScroll) {
+    smoothScroll = new Lenis({
+      autoRaf: true,
+      lerp: 0.12,
+      smoothWheel: true,
+      syncTouch: false,
+      anchors: true,
+      prevent: (node) =>
+        node.matches("dialog, textarea, #quick-contact, #mobile-menu"),
+    });
+    if (dialog.open) smoothScroll.stop();
+  }
+}
+updateSmoothScroll();
+motionPreference.addEventListener("change", updateSmoothScroll);
+desktopPointer.addEventListener("change", updateSmoothScroll);
+
+// Reviews remain horizontally scrollable without JavaScript. No autoplay:
+// visitors decide when to move to the next review.
+const reviewTrack = document.querySelector("#review-track");
+const reviewSlides = [...reviewTrack.querySelectorAll(".review-slide")];
+const reviewPrevious = document.querySelector("#review-prev");
+const reviewNext = document.querySelector("#review-next");
+const reviewCurrent = document.querySelector("#review-current");
+let reviewIndex = 0;
+let reviewScrollTimeout;
+function updateReviewNavigation(index) {
+  reviewIndex = index;
+  reviewCurrent.textContent = String(index + 1).padStart(2, "0");
+  reviewPrevious.disabled = index === 0;
+  reviewNext.disabled = index === reviewSlides.length - 1;
+}
+function showReview(index, animate = true) {
+  const next = Math.max(0, Math.min(index, reviewSlides.length - 1));
+  updateReviewNavigation(next);
+  reviewTrack.scrollTo({
+    left: next * reviewTrack.clientWidth,
+    behavior: animate && !motionPreference.matches ? "smooth" : "instant",
+  });
+}
+document.querySelector(".review-navigation").hidden = false;
+document.querySelector(".review-controls").hidden = false;
+reviewPrevious.addEventListener("click", () => showReview(reviewIndex - 1));
+reviewNext.addEventListener("click", () => showReview(reviewIndex + 1));
+reviewTrack.addEventListener("keydown", (event) => {
+  const targets = {
+    ArrowLeft: reviewIndex - 1,
+    ArrowRight: reviewIndex + 1,
+    Home: 0,
+    End: reviewSlides.length - 1,
+  };
+  if (!(event.key in targets)) return;
+  event.preventDefault();
+  showReview(targets[event.key]);
+});
+reviewTrack.addEventListener("scroll", () => {
+  clearTimeout(reviewScrollTimeout);
+  reviewScrollTimeout = setTimeout(() => {
+    updateReviewNavigation(
+      Math.round(reviewTrack.scrollLeft / reviewTrack.clientWidth),
+    );
+  }, 120);
+});
+new ResizeObserver(() => showReview(reviewIndex, false)).observe(reviewTrack);
+
 if (!motionPreference.matches && "IntersectionObserver" in window) {
   const revealTargets = document.querySelectorAll(
-    ".approach-grid > *, .pricing-heading, .price-item, .process-step, .faq-intro, .faq-list, .contact-copy, .project-form",
+    ".approach-grid > *, .pricing-heading, .price-item, .process-step, .handoff-copy, .handoff-visual, .reviews-intro, .review-carousel, .faq-intro, .faq-list, .contact-copy, .project-form",
   );
   const observer = new IntersectionObserver(
     (entries) => {
@@ -181,6 +258,13 @@ if (!motionPreference.matches && "IntersectionObserver" in window) {
     { threshold: 0.08 },
   );
   revealTargets.forEach((target) => {
+    const siblings = [...target.parentElement.children].filter((item) =>
+      [...revealTargets].includes(item),
+    );
+    target.style.setProperty(
+      "--reveal-delay",
+      `${Math.min(siblings.indexOf(target), 3) * 60}ms`,
+    );
     target.classList.add("scroll-reveal");
     observer.observe(target);
   });
