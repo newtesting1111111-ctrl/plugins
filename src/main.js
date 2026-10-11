@@ -2,6 +2,23 @@ import { contactConfig } from "./config.js";
 import Lenis from "lenis";
 import "lenis/dist/lenis.css";
 
+// Keep the supplied remote illustration; show the decorative search window
+// only when that image cannot load. Works if the error happened before this script.
+const seoImage = document.querySelector(".seo-hero-image");
+if (seoImage) {
+  const updateSeoImage = () => {
+    seoImage
+      .closest(".seo-picture")
+      .classList.toggle(
+        "is-unavailable",
+        seoImage.complete && seoImage.naturalWidth === 0,
+      );
+  };
+  seoImage.addEventListener("error", updateSeoImage);
+  seoImage.addEventListener("load", updateSeoImage);
+  updateSeoImage();
+}
+
 const menuButton = document.querySelector(".menu-toggle");
 const mobileMenu = document.querySelector("#mobile-menu");
 function closeMenu() {
@@ -81,10 +98,9 @@ function setFormStatus(message, state) {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (submitting) return;
-  ["name", "contact"].forEach((name) => {
-    form.elements.namedItem(name).value = form.elements
-      .namedItem(name)
-      .value.trim();
+  ["name", "contact", "site"].forEach((name) => {
+    const input = form.elements.namedItem(name);
+    if (input) input.value = input.value.trim();
   });
   if (!form.reportValidity()) return;
 
@@ -115,7 +131,7 @@ form.addEventListener("submit", async (event) => {
         response.status === 429
           ? "Слишком много попыток. Попробуйте через несколько минут или напишите мне в Telegram."
           : response.status === 422
-            ? "Проверьте имя и контакт для связи, затем отправьте заявку снова."
+            ? "Проверьте поля формы, затем отправьте заявку снова."
             : "Не удалось отправить заявку. Попробуйте ещё раз или напишите мне в Telegram.";
       throw new Error(message);
     }

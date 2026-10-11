@@ -6,9 +6,11 @@ const MAIL_FROM = 'info@uweb.by';
 const MAIL_TO = 'sitehub24@gmail.com';
 const MAX_BODY_BYTES = 16384;
 const RATE_WINDOW = 600;
+$formReturnPath = '/#contact';
 
 function respond(int $status, bool $ok, string $message): void
 {
+    global $formReturnPath;
     http_response_code($status);
     header('Cache-Control: no-store');
     header('X-Content-Type-Options: nosniff');
@@ -26,7 +28,7 @@ function respond(int $status, bool $ok, string $message): void
             . 'main{max-width:600px;margin:12vh auto;padding:24px}h1{font-size:32px;line-height:1.25}'
             . 'a{color:#425fe2;display:inline-block;margin:12px 20px 0 0}</style>'
             . '<main><strong>uweb.by</strong><h1>' . $title . '</h1><p>' . $safeMessage . '</p>'
-            . '<a href="/#contact">Вернуться на сайт</a>'
+            . '<a href="' . $formReturnPath . '">Вернуться на сайт</a>'
             . '<a href="https://t.me/develop_by">Написать в Telegram</a></main></html>';
     }
     exit;
@@ -66,11 +68,17 @@ if (strpos($contentType, 'application/json') === 0) {
     respond(415, false, 'Отправьте заявку через форму на сайте.');
 }
 
-foreach (['name', 'contact', 'service', 'message', 'website'] as $field) {
+foreach (['name', 'contact', 'service', 'message', 'website', 'context', 'site'] as $field) {
     if (isset($data[$field]) && !is_string($data[$field])) {
         respond(422, false, 'Проверьте поля заявки.');
     }
 }
+
+$context = $data['context'] ?? 'web';
+if (!in_array($context, ['web', 'seo'], true)) {
+    respond(422, false, 'Выберите услугу через форму на сайте.');
+}
+$formReturnPath = $context === 'seo' ? '/seo/#contact' : '/#contact';
 
 // Ignore the hidden bot field without sending email or using the rate quota.
 if (trim($data['website'] ?? '') !== '') {
@@ -81,7 +89,10 @@ $name = trim($data['name'] ?? '');
 $contact = trim($data['contact'] ?? '');
 $service = trim($data['service'] ?? '');
 $message = trim($data['message'] ?? '');
-$services = ['Лендинг', 'Сайт компании', 'Интернет-магазин', 'Индивидуальное решение'];
+$site = trim($data['site'] ?? '');
+$services = $context === 'seo'
+    ? ['Комплексное SEO', 'Локальное SEO', 'SEO интернет-магазина', 'Технический аудит']
+    : ['Лендинг', 'Сайт компании', 'Интернет-магазин', 'Индивидуальное решение'];
 
 if (preg_match('/\A.{1,80}\z/us', $name) !== 1
     || preg_match('/\A.{1,160}\z/us', $contact) !== 1
@@ -90,6 +101,14 @@ if (preg_match('/\A.{1,80}\z/us', $name) !== 1
     || strpos($message, "\0") !== false
     || !in_array($service, $services, true)) {
     respond(422, false, 'Проверьте имя, контакт и описание проекта.');
+}
+
+// The address is included in the email only; the server never requests it.
+if ($site !== '' && (strlen($site) > 2048
+    || preg_match('/[\p{Cc}]/u', $site) !== 0
+    || filter_var($site, FILTER_VALIDATE_URL) === false
+    || !in_array(strtolower((string) parse_url($site, PHP_URL_SCHEME)), ['http', 'https'], true))) {
+    respond(422, false, 'Укажите адрес сайта, начинающийся с https:// или http://.');
 }
 
 if (!function_exists('mail')) {
@@ -142,11 +161,15 @@ if (!$stored) {
 }
 
 date_default_timezone_set('Europe/Minsk');
-$body = "Заявка на разработку сайта — uweb.by\n\n"
-    . "Формат: $service\nИмя: $name\nКонтакт: $contact\n\nО проекте:\n"
+$applicationTitle = $context === 'seo' ? 'Заявка на SEO-продвижение' : 'Заявка на разработку сайта';
+$body = $applicationTitle . " — uweb.by\n\n"
+    . "Формат: $service\nИмя: $name\nКонтакт: $contact\n"
+    . ($site !== '' ? "Сайт: $site\n" : '')
+    . "\nО проекте:\n"
     . ($message !== '' ? $message : 'Обсудим при знакомстве.')
     . "\n\nОтправлено: " . date('d.m.Y H:i') . " (Минск)\n";
-$subject = '=?UTF-8?B?' . base64_encode('Новая заявка — uweb.by') . '?=';
+$subjectText = $context === 'seo' ? 'Заявка на SEO — uweb.by' : 'Новая заявка — uweb.by';
+$subject = '=?UTF-8?B?' . base64_encode($subjectText) . '?=';
 $headers = [
     'From: "uweb.by" <' . MAIL_FROM . '>',
     'MIME-Version: 1.0',

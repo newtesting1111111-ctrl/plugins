@@ -118,6 +118,40 @@ with (root / 'messages.jsonl').open('a') as output:
         mail = BytesParser(policy=email.policy.default).parsebytes(self.messages()[0]["mail"].encode())
         self.assertIsNone(mail["Reply-To"])
 
+    def test_seo_formats_include_site_and_distinct_subject(self):
+        services = ["Комплексное SEO", "Локальное SEO", "SEO интернет-магазина", "Технический аудит"]
+        for service in services:
+            with self.subTest(service=service):
+                status, body, _ = self.request(self.payload(
+                    context="seo", service=service, site="https://example.by/catalog?category=1&sort=name"))
+                self.assertEqual(status, 200)
+                self.assertTrue(json.loads(body)["ok"])
+        for captured, service in zip(self.messages(), services):
+            mail = BytesParser(policy=email.policy.default).parsebytes(captured["mail"].encode())
+            self.assertEqual(str(mail["Subject"]), "Заявка на SEO — uweb.by")
+            self.assertEqual(mail["To"], "sitehub24@gmail.com")
+            self.assertEqual(mail["From"].addresses[0].addr_spec, "info@uweb.by")
+            self.assertIn("Заявка на SEO-продвижение", mail.get_content())
+            self.assertIn("Формат: " + service, mail.get_content())
+            self.assertIn("Сайт: https://example.by/catalog?category=1&sort=name", mail.get_content())
+
+    def test_invalid_seo_context_and_site_are_rejected(self):
+        for fields in [{"context": "other"}, {"context": ["seo"]},
+                       {"context": "seo", "service": "Лендинг"},
+                       {"service": "Комплексное SEO"}, {"site": ["https://example.by"]},
+                       {"site": "javascript:alert(1)"}, {"site": "ftp://example.by"},
+                       {"site": "example.by"}, {"site": "https://example.by/" + "a" * 2048},
+                       {"site": "https://example.by/\nBcc: attacker@example.com"}]:
+            with self.subTest(fields=fields):
+                self.assertEqual(self.request(self.payload(**fields))[0], 422)
+        self.assertEqual(self.messages(), [])
+
+    def test_seo_regular_post_returns_to_seo_page(self):
+        status, body, _ = self.request(self.payload(context="seo", service="Локальное SEO"), form=True)
+        self.assertEqual(status, 200)
+        self.assertIn('href="/seo/#contact"', body)
+        self.assertEqual(len(self.messages()), 1)
+
     def test_invalid_fields_and_header_injection_are_rejected(self):
         for fields in [{"name": " "}, {"contact": ""}, {"name": ["Анна"]},
                        {"name": "а" * 81}, {"contact": "а" * 161},
