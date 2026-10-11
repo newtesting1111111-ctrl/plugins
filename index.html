@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f3ed" />
+    <meta
+      name="description"
+      content="Разработка сайтов с характером: лендинги от 400 BYN, сайты компаний от 700 BYN, интернет-магазины от 900 BYN. Обсудим вашу задачу и подберём решение."
+    />
+    <title>forma — сайты с характером</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:title" content="forma — сайты с характером" />
+    <meta
+      property="og:description"
+      content="Разработка сайтов для вашего бизнеса. Лендинг от 400 BYN, сайт компании от 700 BYN, интернет-магазин от 900 BYN."
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="preload"
+      href="/fonts/golos-text-cyrillic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/fonts/golos-text-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <svg
+      class="icon-defs"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <symbol id="arrow-icon" viewBox="0 0 24 24">
+        <path
+          d="M5 19 19 5M5 5h14v14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </symbol>
+      <symbol id="star-icon" viewBox="0 0 32 32">
+        <path
+          d="M16 2v28M2 16h28M6 6l20 20M6 26 26 6"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="3.2"
+          stroke-linecap="round"
+        />
+      </symbol>
+    </svg>
+    <a class="skip-link" href="#main">К содержимому</a>
+    <header class="header wrap">
+      <a href="#" class="logo" aria-label="forma — на главную"
+        >forma<span class="logo-dot">.</span
+        ><span class="logo-caption">сайты с характером</span></a
+      >
+      <nav class="desktop-nav" aria-label="Основная навигация">
+        <a href="#approach">Подход</a><a href="#pricing">Форматы и цены</a
+        ><a href="#process">Как работаем</a>
+      </nav>
+      <a class="header-cta" href="#contact"
+        >Давайте знакомиться
+        <span aria-hidden="true"
+          ><svg class="icon icon-arrow" aria-hidden="true">
+            <use href="#arrow-icon" /></svg></span
+      ></a>
+      <button
+        class="menu-toggle"
+        aria-label="Открыть меню"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <span></span><span></span>
+      </button>
+      <nav
+        id="mobile-menu"
+        class="mobile-menu"
+        aria-label="Мобильная навигация"
+        hidden
+      >
+        <a href="#approach">Подход</a><a href="#pricing">Форматы и цены</a
+        ><a href="#process">Как работаем</a
+        ><a href="#contact"
+          >Обсудить проект
+          <svg class="icon icon-arrow" aria-hidden="true">
+            <use href="#arrow-icon" /></svg
+        ></a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">
+            <span class="status-dot"></span> НЕБОЛЬШАЯ СТУДИЯ. БОЛЬШИЕ ИДЕИ.
+          </p>
+          <h1 id="hero-title">
+            Сайт,<br />который<br /><span class="serif word-mark"
+              >работает<svg viewBox="0 0 590 25" aria-hidden="true">
+                <path d="M4 19C143 0 339 2 583 13" /></svg></span
+            ><span class="orange">.</span>
+          </h1>
+          <p class="hero-description">
+            На ваш бизнес. На первое впечатление.<br />На желание нажать «Хочу
+            так же».
+          </p>
+          <div class="hero-actions">
+            <a class="button button-dark" href="#contact"
+              >Обсудить мой проект
+              <span class="button-arrow" aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg></span></a
+            ><a class="text-link" href="#pricing"
+              >Сначала цены
+              <span aria-hidden="true"
+                ><svg class="icon icon-arrow arrow-down" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg></span
+            ></a>
+          </div>
+          <p class="hero-footnote">
+            <span aria-hidden="true"
+              ><svg class="icon icon-star" aria-hidden="true">
+                <use href="#star-icon" /></svg
+            ></span>
+            С нуля. Под вашу задачу. Без шаблонного мышления.
+          </p>
+        </div>
+        <div class="hero-visual">
+          <div class="visual-top-note">
+            <svg viewBox="0 0 85 47" aria-hidden="true">
+              <path d="M3 7c37-18 60 4 59 29m-12-9 12 11 17-10" /></svg
+            ><span>ваша идея,<br />новая форма</span>
+          </div>
+          <div
+            class="showcase"
+            role="img"
+            aria-label="Концепт дизайна сайта bloom: сиреневый фон, оранжевый цветок и надпись «Дайте идее расцвести»"
+          >
+            <div class="browser-bar" aria-hidden="true">
+              <span></span><span></span><span></span>
+              <div>bloom.studio</div>
+              <span class="browser-plus">+</span>
+            </div>
+            <div class="concept-site" aria-hidden="true">
+              <div class="concept-nav">
+                <strong
+                  >bloom<span
+                    ><svg class="icon icon-star" aria-hidden="true">
+                      <use href="#star-icon" /></svg></span></strong
+                ><span>Наш подход &nbsp;&nbsp; Проекты</span
+                ><span class="concept-menu">☰</span>
+              </div>
+              <div class="concept-content">
+                <span class="concept-kicker">ДЛЯ ТЕХ, КТО ГОТОВ РАСТИ</span>
+                <div class="concept-title">
+                  Дайте идее<br /><em>расцвести.</em>
+                </div>
+                <p>Помогаем смелым идеям<br />стать чем-то большим.</p>
+                <span class="concept-link"
+                  >Найти вдохновение
+                  <b
+                    ><svg class="icon icon-arrow" aria-hidden="true">
+                      <use href="#arrow-icon" /></svg></b
+                ></span>
+                <svg class="flower" viewBox="0 0 350 370" fill="none">
+                  <defs>
+                    <linearGradient
+                      id="petal"
+                      x1="80"
+                      y1="0"
+                      x2="310"
+                      y2="330"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stop-color="#ff984e" />
+                      <stop offset=".5" stop-color="#ff642e" />
+                      <stop offset="1" stop-color="#da3b16" />
+                    </linearGradient>
+                    <radialGradient id="center">
+                      <stop stop-color="#f5e978" />
+                      <stop offset="1" stop-color="#edb740" />
+                    </radialGradient>
+                    <filter id="shadow">
+                      <feDropShadow
+                        dx="-5"
+                        dy="10"
+                        stdDeviation="8"
+                        flood-color="#613b6b"
+                        flood-opacity=".22"
+                      />
+                    </filter>
+                  </defs>
+                  <path
+                    d="M165 335c15-61 37-74 57-107"
+                    stroke="#567459"
+                    stroke-width="11"
+                  />
+                  <path
+                    d="M181 300c-41 4-62-18-66-37 38-5 65 13 66 37Z"
+                    fill="#738a69"
+                  />
+                  <g filter="url(#shadow)">
+                    <path
+                      d="M196 153C107 53 135-9 181 14c32 16 38 65 30 112C250 6 321 10 327 57c4 34-42 66-89 90C363 99 376 161 344 187c-26 22-76 13-114-5C326 244 304 304 260 299c-39-4-58-54-63-96C199 322 133 332 113 293c-17-34 12-76 48-109C51 252 9 203 32 165c20-33 69-30 117-18C37 110 54 47 100 48c36 1 61 53 78 96Z"
+                      fill="url(#petal)"
+                    />
+                    <ellipse
+                      cx="195"
+                      cy="162"
+                      rx="38"
+                      ry="33"
+                      transform="rotate(-15 195 162)"
+                      fill="url(#center)"
+                    />
+                    <g fill="#b98935" opacity=".6">
+                      <circle cx="180" cy="149" r="2" />
+                      <circle cx="195" cy="143" r="2" />
+                      <circle cx="209" cy="151" r="2" />
+                      <circle cx="186" cy="164" r="2" />
+                      <circle cx="202" cy="164" r="2" />
+                      <circle cx="195" cy="178" r="2" />
+                      <circle cx="215" cy="173" r="2" />
+                      <circle cx="174" cy="173" r="2" />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <div class="concept-bottom">
+                <span
+                  >Маленький шаг.<br /><strong>Большие перемены.</strong></span
+                ><span class="concept-pill"
+                  >Начать сейчас
+                  <svg class="icon icon-arrow" aria-hidden="true">
+                    <use href="#arrow-icon" /></svg
+                ></span>
+              </div>
+            </div>
+          </div>
+          <div class="floating-sticker" aria-hidden="true">
+            <span
+              ><svg class="icon icon-star" aria-hidden="true">
+                <use href="#star-icon" /></svg
+            ></span>
+            не шаблон.<br />ваш характер.
+          </div>
+          <div class="visual-caption">
+            <span>01 / ВИЗУАЛЬНЫЙ КОНЦЕПТ</span
+            ><span aria-hidden="true"
+              ><svg class="icon icon-arrow arrow-back" aria-hidden="true">
+                <use href="#arrow-icon" /></svg
+            ></span>
+          </div>
+        </div>
+      </section>
+
+      <div class="benefit-strip wrap">
+        <p>Хороший сайт —<br /><strong>больше, чем картинка.</strong></p>
+        <div>
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="m4 24 9-9 6 5 9-15M18 5h10v10" /></svg
+          ><span>Помогает<br />получать заявки</span>
+        </div>
+        <div>
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="9" y="2" width="15" height="28" rx="3" />
+            <path d="M14 25h5" /></svg
+          ><span>Удобен<br />на любом экране</span>
+        </div>
+        <div>
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="m16 2 4 9 10 5-10 4-4 10-4-10-10-4 10-5Z" /></svg
+          ><span>Запоминается.<br />И остаётся вашим.</span>
+        </div>
+      </div>
+
+      <section
+        id="approach"
+        class="approach wrap section-space"
+        aria-labelledby="approach-title"
+      >
+        <div class="section-label">
+          <span>01 / ПОДХОД</span
+          ><span class="mini-cross" aria-hidden="true"
+            ><svg class="icon icon-star" aria-hidden="true">
+              <use href="#star-icon" /></svg
+          ></span>
+        </div>
+        <div class="approach-grid">
+          <h2 id="approach-title">
+            У вас есть дело.<br />У нас — чувство<br /><span class="serif"
+              >формы.</span
+            >
+          </h2>
+          <div class="approach-copy">
+            <p class="large-copy">
+              Не просто переносим бизнес в интернет. Помогаем рассказать о нём
+              так, чтобы вас <span>поняли, запомнили и выбрали.</span>
+            </p>
+            <div class="approach-point">
+              <span>01</span>
+              <div>
+                <h3>Сначала смысл, потом пиксели</h3>
+                <p>
+                  Разбираемся, кто ваш клиент и что ему важно. Из этого
+                  рождаются структура, тексты и дизайн.
+                </p>
+              </div>
+            </div>
+            <div class="approach-point">
+              <span>02</span>
+              <div>
+                <h3>Красота без препятствий</h3>
+                <p>
+                  Выразительный визуал, понятная навигация и короткий путь от
+                  первого интереса до заявки.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="pricing" aria-labelledby="pricing-title">
+        <div class="wrap pricing-inner">
+          <div class="section-label">
+            <span>02 / ФОРМАТЫ И ЦЕНЫ</span><span>ПОНЯТНАЯ ТОЧКА СТАРТА</span>
+          </div>
+          <div class="pricing-heading">
+            <h2 id="pricing-title">
+              Разные задачи.<br /><span class="serif">Ваше решение.</span>
+            </h2>
+            <p>
+              От одной сильной страницы<br />до целой цифровой истории.<br />Выберите,
+              с чего начнём.
+            </p>
+          </div>
+          <div class="price-list">
+            <a href="#contact" class="price-row" data-service="Лендинг"
+              ><span class="price-number">01</span>
+              <div class="price-name">
+                <h3>Лендинг</h3>
+                <p>Одна страница. Одна цель. Всё внимание — вашей услуге.</p>
+              </div>
+              <span class="price-amount"
+                ><small>от</small> 400 <span>BYN</span></span
+              ><span class="price-arrow" aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg></span
+            ></a>
+            <a href="#contact" class="price-row" data-service="Сайт компании"
+              ><span class="price-number">02</span>
+              <div class="price-name">
+                <h3>Сайт компании</h3>
+                <p>Расскажите, кто вы, что делаете и почему вам доверять.</p>
+              </div>
+              <span class="price-amount"
+                ><small>от</small> 700 <span>BYN</span></span
+              ><span class="price-arrow" aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg></span
+            ></a>
+            <a href="#contact" class="price-row" data-service="Интернет-магазин"
+              ><span class="price-number">03</span>
+              <div class="price-name">
+                <h3>Интернет-магазин</h3>
+                <p>От знакомства с товаром до покупки — удобно и понятно.</p>
+              </div>
+              <span class="price-amount"
+                ><small>от</small> 900 <span>BYN</span></span
+              ><span class="price-arrow" aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg></span
+            ></a>
+            <a
+              href="#contact"
+              class="price-row custom-row"
+              data-service="Индивидуальное решение"
+              ><span class="price-number">04</span>
+              <div class="price-name">
+                <h3>
+                  Что-то особенное<span
+                    ><svg class="icon icon-star" aria-hidden="true">
+                      <use href="#star-icon" /></svg
+                  ></span>
+                </h3>
+                <p>Сложная задача или смелая идея? Найдём свою форму.</p>
+              </div>
+              <span class="custom-price">Обсудим вместе</span
+              ><span class="price-arrow" aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg></span
+            ></a>
+          </div>
+          <p class="pricing-note">
+            Стоимость указана «от». Итоговую сумму согласуем после обсуждения
+            задачи и объёма работ.
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="process"
+        class="process wrap section-space"
+        aria-labelledby="process-title"
+      >
+        <div class="section-label">
+          <span>03 / КАК РАБОТАЕМ</span><span>ВСЁ ПОНЯТНО НА КАЖДОМ ШАГЕ</span>
+        </div>
+        <div class="process-heading">
+          <h2 id="process-title">
+            От «есть идея»<br />до <span class="serif">«мы в сети».</span>
+          </h2>
+          <p>
+            Вы знаете свой бизнес.<br />Мы знаем, как придать ему форму.<br />Давайте
+            объединим эти знания.
+          </p>
+        </div>
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="step-marker">
+              <span>01</span
+              ><span aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg
+              ></span>
+            </div>
+            <h3>Знакомимся</h3>
+            <p>
+              Обсуждаем задачу, аудиторию и ожидания. Фиксируем объём, сроки и
+              стоимость.
+            </p>
+          </div>
+          <div class="process-step">
+            <div class="step-marker">
+              <span>02</span
+              ><span aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg
+              ></span>
+            </div>
+            <h3>Находим форму</h3>
+            <p>
+              Продумываем структуру и показываем дизайн. Обсуждаем и
+              дорабатываем вместе.
+            </p>
+          </div>
+          <div class="process-step">
+            <div class="step-marker">
+              <span>03</span
+              ><span aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg
+              ></span>
+            </div>
+            <h3>Собираем сайт</h3>
+            <p>
+              Оживляем макеты. Настраиваем адаптивность и проверяем формы,
+              ссылки и страницы.
+            </p>
+          </div>
+          <div class="process-step">
+            <div class="step-marker">
+              <span>04</span
+              ><span aria-hidden="true"
+                ><svg class="icon icon-star" aria-hidden="true">
+                  <use href="#star-icon" /></svg
+              ></span>
+            </div>
+            <h3>Запускаем</h3>
+            <p>
+              Публикуем сайт, передаём доступы и объясняем, как всё устроено.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="faq wrap" aria-labelledby="faq-title">
+        <div class="faq-intro">
+          <span class="eyebrow">ЕЩЁ ПАРА МОМЕНТОВ</span>
+          <h2 id="faq-title">
+            Вопросы?<br /><span class="serif">Это нормально.</span>
+          </h2>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>
+              У меня пока нет текстов и фотографий.<span aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <p>
+              Начнём с того, что есть. На первом разговоре разберём, какие
+              материалы нужны, что можно подготовить вместе и как это повлияет
+              на объём и стоимость работы.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Сколько времени занимает разработка?<span aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <p>
+              Срок зависит от количества страниц, функций и готовности
+              материалов. После обсуждения задачи согласуем конкретный план и
+              сроки до начала работы.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Сайт будет работать на телефоне?<span aria-hidden="true">+</span>
+            </summary>
+            <p>
+              Да. Адаптация под телефон, планшет и компьютер входит в
+              разработку. Проверяем, чтобы текст легко читался, а кнопками и
+              формами было удобно пользоваться.
+            </p>
+          </details>
+          <details>
+            <summary>
+              Что входит в указанную стоимость?<span aria-hidden="true">+</span>
+            </summary>
+            <p>
+              Цена «от» — ориентир для базового объёма выбранного формата. Перед
+              началом согласуем структуру, функции, дизайн и итоговую сумму.
+              Домен, хостинг и платные внешние сервисы обсуждаются отдельно.
+            </p>
+          </details>
+        </div>
+      </section>
+
+      <section id="contact" class="contact" aria-labelledby="contact-title">
+        <div class="wrap contact-grid">
+          <div class="contact-copy">
+            <p class="eyebrow">
+              <span class="status-dot"></span> 04 / НАЧНЁМ С РАЗГОВОРА
+            </p>
+            <h2 id="contact-title">
+              У хорошего<br />сайта всё<br />начинается<br /><span class="serif"
+                >с «привет».</span
+              >
+            </h2>
+            <p>
+              Расскажите немного о вашей идее.<br />Даже если она пока только в
+              голове.
+            </p>
+            <div class="contact-spark" aria-hidden="true">
+              <svg class="icon icon-star" aria-hidden="true">
+                <use href="#star-icon" />
+              </svg>
+            </div>
+          </div>
+          <form
+            id="project-form"
+            class="project-form"
+            action="mailto:sitehub24@gmail.com"
+            method="post"
+            enctype="text/plain"
+          >
+            <fieldset>
+              <legend>Какой сайт вам нужен?</legend>
+              <div class="service-options">
+                <label
+                  ><input
+                    type="radio"
+                    name="service"
+                    value="Лендинг"
+                    checked
+                  /><span>Лендинг</span></label
+                ><label
+                  ><input
+                    type="radio"
+                    name="service"
+                    value="Сайт компании"
+                  /><span>Сайт компании</span></label
+                ><label
+                  ><input
+                    type="radio"
+                    name="service"
+                    value="Интернет-магазин"
+                  /><span>Интернет-магазин</span></label
+                ><label
+                  ><input
+                    type="radio"
+                    name="service"
+                    value="Индивидуальное решение"
+                  /><span>Что-то особенное</span></label
+                >
+              </div>
+            </fieldset>
+            <div class="input-group">
+              <label for="client-name">Как к вам обращаться?</label
+              ><input
+                id="client-name"
+                name="name"
+                type="text"
+                placeholder="Ваше имя"
+                autocomplete="given-name"
+                maxlength="80"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <label for="client-contact">Где вам удобно общаться?</label
+              ><input
+                id="client-contact"
+                name="contact"
+                type="text"
+                placeholder="Email, телефон или @ник в Telegram"
+                autocomplete="off"
+                maxlength="160"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <label for="client-message"
+                >Пара слов о проекте <span>(необязательно)</span></label
+              ><textarea
+                id="client-message"
+                name="message"
+                rows="2"
+                maxlength="3000"
+                placeholder="Чем занимаетесь и какой сайт представляете?"
+              ></textarea>
+            </div>
+            <button type="submit" class="button button-dark form-submit">
+              <span id="submit-label">Обсудить проект</span
+              ><span class="button-arrow" aria-hidden="true"
+                ><svg class="icon icon-arrow" aria-hidden="true">
+                  <use href="#arrow-icon" /></svg
+              ></span>
+            </button>
+            <p class="form-note" id="form-note">
+              Подготовим письмо с вашей заявкой. Отправить его можно в почтовом
+              приложении.
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+    <div class="direct-contacts wrap">
+      <span>Или просто напишите. Можно без брифа.</span
+      ><a
+        href="https://t.me/develop_by"
+        target="_blank"
+        rel="noopener noreferrer"
+        >Telegram
+        <span aria-hidden="true"
+          ><svg class="icon icon-arrow" aria-hidden="true">
+            <use href="#arrow-icon" /></svg></span></a
+      ><a href="mailto:sitehub24@gmail.com"
+        >sitehub24@gmail.com
+        <span aria-hidden="true"
+          ><svg class="icon icon-arrow" aria-hidden="true">
+            <use href="#arrow-icon" /></svg></span></a
+      ><a href="tel:+375255032030"
+        >+375 25 503-20-30
+        <span aria-hidden="true"
+          ><svg class="icon icon-arrow" aria-hidden="true">
+            <use href="#arrow-icon" /></svg></span
+      ></a>
+    </div>
+    <footer class="footer wrap">
+      <a class="logo" href="#" aria-label="forma — наверх"
+        >forma<span class="logo-dot">.</span></a
+      >
+      <p>Придаём идеям форму. Сайтам — характер.</p>
+      <a href="#main"
+        >Наверх
+        <span aria-hidden="true"
+          ><svg class="icon icon-arrow arrow-top" aria-hidden="true">
+            <use href="#arrow-icon" /></svg></span></a
+      ><span class="copyright">© <span id="year">2026</span> forma</span>
+    </footer>
+    <dialog
+      id="brief-dialog"
+      class="brief-dialog"
+      aria-labelledby="brief-title"
+    >
+      <button class="dialog-close" type="button" aria-label="Закрыть">×</button>
+      <p class="eyebrow">ПЕРВЫЙ ШАГ СДЕЛАН</p>
+      <h2 id="brief-title">
+        Ваша идея<br /><span class="serif">обрела форму.</span>
+      </h2>
+      <p id="brief-explanation">
+        Бриф готов. Он пока не отправлен — скопируйте его или сохраните файлом.
+      </p>
+      <pre id="brief-text"></pre>
+      <div class="brief-actions">
+        <button class="button button-dark" id="copy-brief" type="button">
+          Скопировать бриф
+          <span aria-hidden="true"
+            ><svg class="icon icon-arrow" aria-hidden="true">
+              <use href="#arrow-icon" /></svg
+          ></span></button
+        ><button
+          class="download-brief text-link"
+          id="download-brief"
+          type="button"
+        >
+          Сохранить .txt ↓</button
+        ><a class="button button-dark" id="send-brief" hidden
+          >Отправить заявку
+          <svg class="icon icon-arrow" aria-hidden="true">
+            <use href="#arrow-icon" /></svg
+        ></a>
+      </div>
+      <p id="brief-status" role="status" aria-live="polite"></p>
+    </dialog>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
