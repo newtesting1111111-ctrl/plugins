@@ -32,6 +32,30 @@ window.matchMedia("(min-width: 901px)").addEventListener("change", (event) => {
   if (event.matches) closeMenu();
 });
 
+const quickContact = document.querySelector("#quick-contact");
+const contactToggle = quickContact.querySelector("summary");
+function closeQuickContact(restoreFocus = false) {
+  quickContact.open = false;
+  if (restoreFocus) contactToggle.focus();
+}
+quickContact.addEventListener("toggle", () => {
+  contactToggle.setAttribute(
+    "aria-label",
+    quickContact.open ? "Закрыть способы связи" : "Открыть способы связи",
+  );
+  if (quickContact.open) closeMenu();
+});
+document.addEventListener("click", (event) => {
+  if (quickContact.open && !quickContact.contains(event.target))
+    closeQuickContact();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && quickContact.open) closeQuickContact(true);
+});
+quickContact.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", () => closeQuickContact(true));
+});
+
 document.querySelectorAll("[data-service]").forEach((link) => {
   link.addEventListener("click", () => {
     const input = [...document.querySelectorAll('input[name="service"]')].find(
@@ -93,6 +117,7 @@ form.addEventListener("submit", (event) => {
     document.querySelector("#brief-explanation").textContent =
       "Бриф готов. Скопируйте его, откройте Telegram и отправьте нам сообщение.";
   }
+  closeQuickContact();
   dialog.showModal();
 });
 

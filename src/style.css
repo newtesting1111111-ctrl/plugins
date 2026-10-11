@@ -2276,3 +2276,163 @@ summary::-webkit-details-marker {
     transition: none;
   }
 }
+
+/* Quick contact stays within the viewport, including phone safe areas. */
+.contact-widget {
+  position: fixed;
+  right: calc(26px + env(safe-area-inset-right, 0px));
+  bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+  z-index: 30;
+  padding: 0;
+  border: 0;
+}
+.contact-toggle {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  list-style: none;
+  cursor: pointer;
+  border: 1px solid var(--paper);
+  border-radius: 50%;
+  background: var(--orange);
+  color: var(--ink);
+  box-shadow: 0 6px 24px #25272126;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+.contact-toggle:hover {
+  transform: translateY(-2px);
+  background: #ff8656;
+}
+.contact-toggle:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 4px;
+}
+.contact-toggle svg {
+  position: absolute;
+  width: 27px;
+  height: 27px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.contact-close-icon {
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.8);
+}
+.contact-widget[open] .contact-open-icon {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.contact-widget[open] .contact-close-icon {
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
+}
+.contact-options {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 12px);
+  width: 270px;
+  max-width: calc(100vw - 52px - env(safe-area-inset-right, 0px));
+  max-height: calc(100dvh - 120px - env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 12px 35px #25272120;
+}
+.contact-options-title {
+  margin: 3px 8px 10px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.contact-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 8px;
+  border-radius: 11px;
+  transition: background 0.2s;
+}
+.contact-action:hover {
+  background: #eae9e0;
+}
+.contact-action:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+.contact-action-icon {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: var(--lime);
+}
+.contact-action-icon svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.contact-action-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.contact-action-copy strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.contact-action-copy > span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.contact-action > .icon {
+  margin-left: auto;
+  width: 15px;
+  height: 15px;
+}
+@keyframes contact-options-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .contact-widget[open] .contact-options {
+    transform-origin: bottom right;
+    animation: contact-options-enter 0.2s ease both;
+  }
+}
+@media (max-width: 650px) {
+  .contact-widget {
+    right: calc(18px + env(safe-area-inset-right, 0px));
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  }
+  .contact-toggle {
+    width: 54px;
+    height: 54px;
+  }
+  .contact-options {
+    max-width: calc(100vw - 36px - env(safe-area-inset-right, 0px));
+  }
+}
