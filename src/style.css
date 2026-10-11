@@ -248,7 +248,7 @@ textarea:focus-visible {
 }
 .hero-orbits {
   position: absolute;
-  width: min(760px, 56vw);
+  width: min(800px, 56vw);
   right: max(-40px, calc((100% - 1280px) / 2 - 65px));
   top: -25px;
   stroke: #718cdd;
@@ -297,7 +297,7 @@ textarea:focus-visible {
 .motion-cursor {
   position: absolute;
   width: 30px;
-  right: 45%;
+  right: 48%;
   bottom: 9%;
   color: #798be7;
   fill: #dce4ff;
@@ -516,7 +516,7 @@ textarea:focus-visible {
 }
 .portrait-caption p {
   margin: 11px 0 0;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.65;
   letter-spacing: -0.2px;
   font-weight: 400;
@@ -1681,7 +1681,7 @@ summary::-webkit-details-marker {
     max-width: 520px;
   }
   .portrait-caption p {
-    font-size: 18px;
+    font-size: 14px;
     line-height: 1.65;
     letter-spacing: -0.2px;
     font-weight: 400;
@@ -2212,18 +2212,16 @@ summary::-webkit-details-marker {
   color: var(--paper);
   margin: 0 0 17px;
 }
-.price-detail-copy > p:last-child {
-  line-height: 1.8;
-  color: #e2e9ff;
+.price-detail-copy p {
   margin: 0;
-  font-size: 17px;
 }
 .price-detail-scope ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-.price-detail-scope li {
+.price-detail-scope li,
+.price-detail-copy p {
   line-height: 1.7;
   color: #c3cde6;
   display: flex;
@@ -2516,9 +2514,6 @@ summary::-webkit-details-marker {
   .price-detail-footer {
     flex-wrap: wrap;
   }
-  .price-detail-copy > p:last-child {
-    font-size: 17px;
-  }
 }
 @media (max-width: 650px) {
   .header .logo {
@@ -2544,9 +2539,6 @@ summary::-webkit-details-marker {
   .price-detail {
     padding: 0 10px 26px 32px;
     gap: 23px;
-  }
-  .price-detail-copy > p:last-child {
-    font-size: 17px;
   }
   .price-detail-footer {
     gap: 19px;

@@ -153,7 +153,7 @@ with (root / 'messages.jsonl').open('a') as output:
         self.assertEqual(len(self.messages()), 1)
 
     def test_ppc_tariffs_have_their_own_subject_and_service(self):
-        services = ["Контекст Start", "Контекст Standart", "Контекст Pro", "Индивидуальный расчёт"]
+        services = ["Контекст Start", "Контекст Standart", "Контекст Pro"]
         for service in services:
             with self.subTest(service=service):
                 self.assertEqual(self.request(self.payload(
@@ -168,6 +168,7 @@ with (root / 'messages.jsonl').open('a') as output:
             self.assertIn("Сайт: https://example.by/", mail.get_content())
 
     def test_ppc_native_post_and_service_group_validation(self):
+        self.assertEqual(self.request(self.payload(context="ppc", service="Индивидуальный расчёт"))[0], 422)
         self.assertEqual(self.request(self.payload(context="ppc", service="Лендинг"))[0], 422)
         self.assertEqual(self.request(self.payload(context="seo", service="Контекст Start"))[0], 422)
         self.assertEqual(self.request(self.payload(service="Контекст Start"))[0], 422)

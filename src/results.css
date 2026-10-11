@@ -262,14 +262,6 @@
   }
 }
 @media (max-width: 650px) {
-  .ppc-budget {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .ppc-budget-plus {
-    justify-self: start;
-    font-size: 26px;
-  }
   .case-panel {
     border-radius: 22px;
     padding: 20px;
