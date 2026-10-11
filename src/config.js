@@ -1,5 +1,6 @@
-// Public contact details only. Never put API tokens or credentials here.
+// Public contact details only. Mail credentials must stay on the server.
 export const contactConfig = {
   email: "sitehub24@gmail.com",
-  telegram: "develop_by", // Username without @; email takes priority when both are set.
+  telegram: "develop_by",
+  formEndpoint: "/send-mail.php",
 };

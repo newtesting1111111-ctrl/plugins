@@ -68,101 +68,78 @@ document.querySelectorAll("[data-service]").forEach((link) => {
 });
 
 const form = document.querySelector("#project-form");
-const dialog = document.querySelector("#brief-dialog");
-const briefText = document.querySelector("#brief-text");
-const briefStatus = document.querySelector("#brief-status");
-const sendBrief = document.querySelector("#send-brief");
-let brief = "";
-const email = contactConfig.email.trim();
-const telegram = contactConfig.telegram.replace(/^@/, "").trim();
-const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-const hasTelegram = /^[a-zA-Z][a-zA-Z0-9_]{4,31}$/.test(telegram);
+const formStatus = document.querySelector("#form-status");
+const submitButton = form.querySelector('button[type="submit"]');
+const submitLabel = document.querySelector("#submit-label");
+let submitting = false;
 
-if (hasEmail || hasTelegram) {
-  document.querySelector("#submit-label").textContent = "Обсудить проект";
-  document.querySelector("#form-note").textContent = hasEmail
-    ? "Подготовим письмо с вашей заявкой. Отправить его можно в почтовом приложении."
-    : "Подготовим бриф для сообщения в Telegram.";
+function setFormStatus(message, state) {
+  formStatus.textContent = message;
+  formStatus.dataset.state = state;
 }
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (submitting) return;
   ["name", "contact"].forEach((name) => {
     form.elements.namedItem(name).value = form.elements
       .namedItem(name)
       .value.trim();
   });
   if (!form.reportValidity()) return;
-  const data = new FormData(form);
-  brief = `Заявка на разработку сайта\n\nФормат: ${data.get("service")}\nИмя: ${data.get("name")}\nКонтакт: ${data.get("contact")}\n\nО проекте:\n${String(data.get("message")).trim() || "Обсудим при знакомстве."}`;
-  briefText.textContent = brief;
-  briefStatus.textContent = "";
-  sendBrief.hidden = true;
-  if (hasEmail) {
-    sendBrief.href = `mailto:${email}?subject=${encodeURIComponent("Заявка на разработку сайта — uweb.by")}&body=${encodeURIComponent(brief)}`;
-    sendBrief.hidden = false;
-    sendBrief.replaceChildren(
-      "Открыть письмо ",
-      document.querySelector(".icon-arrow").cloneNode(true),
-    );
-    document.querySelector("#brief-explanation").textContent =
-      "Бриф готов. Откройте письмо и отправьте заявку из своего почтового приложения.";
-  } else if (hasTelegram) {
-    sendBrief.href = `https://t.me/${telegram}`;
-    sendBrief.target = "_blank";
-    sendBrief.rel = "noopener noreferrer";
-    sendBrief.hidden = false;
-    sendBrief.replaceChildren(
-      "Открыть Telegram ",
-      document.querySelector(".icon-arrow").cloneNode(true),
-    );
-    document.querySelector("#brief-explanation").textContent =
-      "Бриф готов. Скопируйте его, откройте Telegram и отправьте нам сообщение.";
-  }
-  closeQuickContact();
-  smoothScroll?.stop();
-  dialog.showModal();
-});
-dialog.addEventListener("close", () => smoothScroll?.start());
 
-document
-  .querySelector(".dialog-close")
-  .addEventListener("click", () => dialog.close());
-dialog.addEventListener("click", (event) => {
-  const bounds = dialog.getBoundingClientRect();
-  if (
-    event.clientX < bounds.left ||
-    event.clientX > bounds.right ||
-    event.clientY < bounds.top ||
-    event.clientY > bounds.bottom
-  )
-    dialog.close();
-});
+  const fields = new FormData(form);
+  const payload = Object.fromEntries(fields.entries());
+  submitting = true;
+  submitButton.disabled = true;
+  form.setAttribute("aria-busy", "true");
+  submitLabel.textContent = "Отправляем…";
+  setFormStatus("Отправляем вашу заявку…", "sending");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
 
-document.querySelector("#copy-brief").addEventListener("click", async () => {
   try {
-    await navigator.clipboard.writeText(brief);
-    briefStatus.textContent = "Бриф скопирован.";
-  } catch {
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.selectNodeContents(briefText);
-    selection.removeAllRanges();
-    selection.addRange(range);
-    briefStatus.textContent =
-      "Выделили текст. Скопируйте его вручную или сохраните файлом.";
+    const response = await fetch(contactConfig.formEndpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+      credentials: "same-origin",
+    });
+    const result = await response.json().catch(() => null);
+    if (!response.ok || result?.ok !== true) {
+      const message =
+        response.status === 429
+          ? "Слишком много попыток. Попробуйте через несколько минут или напишите мне в Telegram."
+          : response.status === 422
+            ? "Проверьте имя и контакт для связи, затем отправьте заявку снова."
+            : "Не удалось отправить заявку. Попробуйте ещё раз или напишите мне в Telegram.";
+      throw new Error(message);
+    }
+    setFormStatus(
+      "Заявка отправлена. Спасибо! Свяжусь с вами по указанному контакту.",
+      "success",
+    );
+    form.reset();
+  } catch (error) {
+    setFormStatus(
+      error.name === "AbortError"
+        ? "Не удалось подтвердить отправку. Попробуйте ещё раз или напишите мне в Telegram."
+        : error instanceof TypeError
+          ? "Проверьте соединение с интернетом и попробуйте отправить заявку снова."
+          : error.message,
+      "error",
+    );
+  } finally {
+    clearTimeout(timeout);
+    submitting = false;
+    submitButton.disabled = false;
+    form.removeAttribute("aria-busy");
+    submitLabel.textContent = "Отправить заявку";
   }
-});
-document.querySelector("#download-brief").addEventListener("click", () => {
-  const url = URL.createObjectURL(
-    new Blob([brief], { type: "text/plain;charset=utf-8" }),
-  );
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "uweb-project-brief.txt";
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  briefStatus.textContent = "Бриф сохранён в текстовый файл.";
 });
 document.querySelector("#year").textContent = String(new Date().getFullYear());
 
@@ -184,10 +161,8 @@ function updateSmoothScroll() {
       smoothWheel: true,
       syncTouch: false,
       anchors: true,
-      prevent: (node) =>
-        node.matches("dialog, textarea, #quick-contact, #mobile-menu"),
+      prevent: (node) => node.matches("textarea, #quick-contact, #mobile-menu"),
     });
-    if (dialog.open) smoothScroll.stop();
   }
 }
 updateSmoothScroll();

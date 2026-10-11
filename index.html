@@ -1079,9 +1079,8 @@
           <form
             id="project-form"
             class="project-form"
-            action="mailto:sitehub24@gmail.com"
+            action="/send-mail.php"
             method="post"
-            enctype="text/plain"
           >
             <fieldset>
               <legend>Какой сайт вам нужен?</legend>
@@ -1150,16 +1149,33 @@
                 placeholder="Чем занимаетесь и какой сайт представляете?"
               ></textarea>
             </div>
+            <div class="form-honeypot" aria-hidden="true">
+              <label for="client-website">Ваш сайт</label>
+              <input
+                id="client-website"
+                name="website"
+                type="text"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </div>
             <button type="submit" class="button button-dark form-submit">
-              <span id="submit-label">Обсудить проект</span
+              <span id="submit-label">Отправить заявку</span
               ><span class="button-arrow" aria-hidden="true"
                 ><svg class="icon icon-arrow" aria-hidden="true">
                   <use href="#arrow-icon" /></svg
               ></span>
             </button>
+            <p
+              id="form-status"
+              class="form-status"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            ></p>
             <p class="form-note" id="form-note">
-              Подготовим письмо с вашей заявкой. Отправить его можно в почтовом
-              приложении.
+              Отвечу вам по указанному контакту. Расскажите о задаче — обсудим
+              подходящий формат.
             </p>
           </form>
         </div>
@@ -1257,42 +1273,6 @@
         </a>
       </nav>
     </details>
-    <dialog
-      id="brief-dialog"
-      class="brief-dialog"
-      data-lenis-prevent
-      aria-labelledby="brief-title"
-    >
-      <button class="dialog-close" type="button" aria-label="Закрыть">×</button>
-      <p class="eyebrow">ПЕРВЫЙ ШАГ СДЕЛАН</p>
-      <h2 id="brief-title">
-        Ваша идея<br /><span class="serif">обрела форму.</span>
-      </h2>
-      <p id="brief-explanation">
-        Бриф готов. Он пока не отправлен — скопируйте его или сохраните файлом.
-      </p>
-      <pre id="brief-text"></pre>
-      <div class="brief-actions">
-        <button class="button button-dark" id="copy-brief" type="button">
-          Скопировать бриф
-          <span aria-hidden="true"
-            ><svg class="icon icon-arrow" aria-hidden="true">
-              <use href="#arrow-icon" /></svg
-          ></span></button
-        ><button
-          class="download-brief text-link"
-          id="download-brief"
-          type="button"
-        >
-          Сохранить .txt ↓</button
-        ><a class="button button-dark" id="send-brief" hidden
-          >Отправить заявку
-          <svg class="icon icon-arrow" aria-hidden="true">
-            <use href="#arrow-icon" /></svg
-        ></a>
-      </div>
-      <p id="brief-status" role="status" aria-live="polite"></p>
-    </dialog>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

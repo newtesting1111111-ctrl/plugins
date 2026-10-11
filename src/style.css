@@ -1268,6 +1268,36 @@ summary::-webkit-details-marker {
   margin: 15px 0 0;
   font-size: 14px;
 }
+.form-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  pointer-events: none;
+}
+.form-submit:disabled {
+  opacity: 0.7;
+  transform: none;
+}
+.form-status {
+  margin: 16px 0 0;
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.form-status:empty {
+  margin: 0;
+}
+.form-status[data-state="sending"] {
+  color: var(--muted);
+}
+.form-status[data-state="success"] {
+  color: #23604b;
+}
+.form-status[data-state="error"] {
+  color: #a0353f;
+}
 .footer {
   display: flex;
   align-items: center;
@@ -1295,71 +1325,6 @@ summary::-webkit-details-marker {
   font-size: 14px;
   color: var(--muted);
 }
-.brief-dialog {
-  border: 0;
-  border-radius: 18px;
-  background: var(--paper);
-  color: var(--ink);
-  max-width: 600px;
-  width: calc(100% - 32px);
-  max-height: calc(100dvh - 40px);
-  padding: 40px;
-  overflow: auto;
-  box-shadow: 0 30px 100px #0003;
-}
-.brief-dialog::backdrop {
-  background: #18234499;
-  backdrop-filter: blur(4px);
-}
-.dialog-close {
-  position: absolute;
-  right: 20px;
-  top: 13px;
-  font-size: 32px;
-  background: none;
-  border: 0;
-  color: var(--ink);
-  padding: 4px 10px;
-}
-.brief-dialog h2 {
-  font-size: 40px;
-  margin: 22px 0;
-}
-.brief-dialog > p:not(.eyebrow) {
-  line-height: 1.6;
-  color: var(--muted);
-  font-size: 16px;
-}
-#brief-text {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  font:
-    16px/1.8 "Golos Text",
-    Arial,
-    sans-serif;
-  padding: 20px;
-  background: #e7ecfc;
-  border-radius: 8px;
-  max-height: 260px;
-  overflow: auto;
-  font-size: 16px;
-}
-.brief-actions {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
-  margin-top: 24px;
-}
-.brief-actions .button {
-  padding-inline: 18px;
-  min-height: 44px;
-  font-size: 15px;
-}
-#brief-status {
-  min-height: 20px;
-}
-
 @media (min-width: 1550px) {
   .hero {
     padding-top: 60px;
@@ -1935,6 +1900,12 @@ summary::-webkit-details-marker {
     max-width: 320px;
     font-size: 14px;
   }
+  .contact-spark {
+    position: static;
+    margin-top: 20px;
+    text-align: right;
+    font-size: 40px;
+  }
   .footer {
     min-height: 135px;
     justify-content: flex-start;
@@ -1952,25 +1923,6 @@ summary::-webkit-details-marker {
   .footer > a:last-of-type {
     margin-left: auto;
     font-size: 16px;
-  }
-  .brief-dialog {
-    padding: 34px 23px 22px;
-  }
-  .brief-dialog h2 {
-    font-size: 34px;
-  }
-  .brief-dialog .eyebrow {
-    font-size: 14px;
-  }
-  #brief-text {
-    padding: 15px;
-    font-size: 16px;
-  }
-  .brief-actions {
-    gap: 16px;
-  }
-  .brief-actions .button {
-    font-size: 15px;
   }
 }
 @media (max-width: 370px) {
