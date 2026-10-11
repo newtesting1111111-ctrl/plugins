@@ -26,6 +26,7 @@
   --line: #d5def0;
   --accent-soft: #dfe6ff;
   --blue: #425fe2;
+  --blue-hover: #314ab5;
   --lavender: #c8c7f9;
   font-family: "Golos Text", "Manrope", Arial, sans-serif;
   color: var(--ink);
@@ -186,16 +187,52 @@ textarea:focus-visible {
   font-size: 18px;
 }
 .hero-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background:
     radial-gradient(ellipse at 76% 42%, #dce5ff 0%, transparent 58%),
     radial-gradient(ellipse at 20% 90%, #eeeaff 0%, transparent 55%);
+}
+.hero-stage::before,
+.hero-stage::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: clamp(320px, 48vw, 760px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(50px);
+}
+.hero-stage::before {
+  top: -26%;
+  right: -8%;
+  background: radial-gradient(
+    circle,
+    #afc5ffb3,
+    #c8c7f966 50%,
+    transparent 72%
+  );
+  opacity: 0.7;
+}
+.hero-stage::after {
+  left: -14%;
+  bottom: -40%;
+  background: radial-gradient(
+    circle,
+    #cec2ffc2,
+    #d6ddff66 50%,
+    transparent 72%
+  );
+  opacity: 0.65;
 }
 .hero {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   gap: 48px;
-  padding-top: 67px;
-  padding-bottom: 69px;
+  padding-top: 48px;
+  padding-bottom: 54px;
   align-items: center;
 }
 .eyebrow {
@@ -220,11 +257,11 @@ textarea:focus-visible {
   font-weight: 650;
 }
 .hero h1 {
-  font-size: clamp(70px, 7.2vw, 104px);
+  font-size: clamp(46px, 4.3vw, 62px);
   font-weight: 650;
-  line-height: 0.99;
-  letter-spacing: -0.075em;
-  margin: 30px 0 29px;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+  margin: 24px 0;
 }
 .word-mark {
   position: relative;
@@ -248,7 +285,7 @@ textarea:focus-visible {
   letter-spacing: -0.2px;
   font-size: 18px;
   line-height: 1.65;
-  max-width: 460px;
+  max-width: 530px;
 }
 .hero-actions {
   display: flex;
@@ -281,7 +318,7 @@ textarea:focus-visible {
   box-shadow: 0 8px 22px #425fe220;
 }
 .button-dark:hover {
-  background: #314ab5;
+  background: var(--blue-hover);
 }
 .button-arrow {
   border-radius: 50%;
@@ -850,17 +887,18 @@ summary::-webkit-details-marker {
   max-height: 250px;
 }
 .form-submit {
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   margin-top: 2px;
-  font-size: 14px;
+  font-size: 16px;
   min-height: 59px;
 }
 .form-note {
   line-height: 1.7;
   color: #4c5d80;
-  text-align: center;
+  text-align: left;
   max-width: 370px;
-  margin: 15px auto 0;
+  margin: 15px 0 0;
   font-size: 14px;
 }
 .footer {
@@ -957,11 +995,11 @@ summary::-webkit-details-marker {
 
 @media (min-width: 1550px) {
   .hero {
-    padding-top: 90px;
-    padding-bottom: 90px;
+    padding-top: 60px;
+    padding-bottom: 64px;
   }
   .hero h1 {
-    font-size: 108px;
+    font-size: 62px;
   }
   .hero-visual {
     padding-top: 50px;
@@ -992,7 +1030,7 @@ summary::-webkit-details-marker {
     padding-bottom: 52px;
   }
   .hero h1 {
-    font-size: clamp(68px, 8vw, 88px);
+    font-size: clamp(42px, 4.8vw, 56px);
   }
   .hero-description {
     font-size: 18px;
@@ -1102,7 +1140,7 @@ summary::-webkit-details-marker {
     gap: 22px;
   }
   .hero h1 {
-    font-size: 68px;
+    font-size: 44px;
   }
   .hero .eyebrow {
     font-size: 14px;
@@ -1236,10 +1274,10 @@ summary::-webkit-details-marker {
     letter-spacing: 0.02em;
   }
   .hero h1 {
-    font-size: clamp(56px, 15.5vw, 92px);
-    line-height: 0.96;
-    margin: 26px 0 32px;
-    letter-spacing: -0.07em;
+    font-size: clamp(34px, 10vw, 60px);
+    line-height: 1.08;
+    margin: 20px 0 24px;
+    letter-spacing: -0.055em;
   }
   .hero-description {
     font-size: 18px;
@@ -1573,7 +1611,7 @@ summary::-webkit-details-marker {
     width: calc(100% - 32px);
   }
   .hero h1 {
-    font-size: 56px;
+    font-size: 34px;
   }
   .hero-actions {
     gap: 14px;
@@ -1932,7 +1970,27 @@ summary::-webkit-details-marker {
   }
 }
 
-/* Gentle entrances and a small moving badge respect reduced-motion settings. */
+/* Slow background glows and small entrances respect reduced-motion settings. */
+@keyframes hero-glow-blue {
+  from {
+    transform: translate(-30px, 0) scale(0.95);
+    opacity: 0.45;
+  }
+  to {
+    transform: translate(-120px, 90px) scale(1.12);
+    opacity: 0.8;
+  }
+}
+@keyframes hero-glow-lavender {
+  from {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.4;
+  }
+  to {
+    transform: translate(100px, -70px) scale(1.15);
+    opacity: 0.75;
+  }
+}
 @keyframes hero-arrive {
   from {
     opacity: 0;
@@ -1974,6 +2032,12 @@ summary::-webkit-details-marker {
   transform: none;
 }
 @media (prefers-reduced-motion: no-preference) {
+  .hero-stage::before {
+    animation: hero-glow-blue 16s ease-in-out infinite alternate;
+  }
+  .hero-stage::after {
+    animation: hero-glow-lavender 20s ease-in-out infinite alternate;
+  }
   .portrait-frame {
     animation: portrait-arrive 0.9s 0.15s cubic-bezier(0.2, 0.7, 0.3, 1) both;
     border: 0;
@@ -2015,7 +2079,7 @@ summary::-webkit-details-marker {
     animation: hero-arrive 0.65s 0.22s ease both;
     font-size: 18px;
     line-height: 1.65;
-    max-width: 460px;
+    max-width: 530px;
   }
   .hero-actions {
     animation: hero-arrive 0.65s 0.32s ease both;
@@ -2151,8 +2215,8 @@ summary::-webkit-details-marker {
   cursor: pointer;
   border: 1px solid var(--paper);
   border-radius: 50%;
-  background: var(--orange);
-  color: var(--ink);
+  background: var(--blue);
+  color: #ffffff;
   box-shadow: 0 6px 24px #425fe226;
   transition:
     background 0.2s,
@@ -2160,7 +2224,7 @@ summary::-webkit-details-marker {
 }
 .contact-toggle:hover {
   transform: translateY(-2px);
-  background: #ff8656;
+  background: var(--blue-hover);
 }
 .contact-toggle:focus-visible {
   outline: 3px solid var(--ink);
