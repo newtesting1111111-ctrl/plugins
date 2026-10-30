@@ -113,6 +113,17 @@ with (root / 'messages.jsonl').open('a') as output:
         self.assertIn("Нужен сайт для услуг & рекламы.", mail.get_content())
         self.assertIn("(Минск)", mail.get_content())
 
+    def test_unified_home_accepts_cross_service_requests(self):
+        services = ["План: сайт + реклама + SEO", "Контекст Start", "Комплексное SEO"]
+        for service in services:
+            with self.subTest(service=service):
+                status, body, _ = self.request(self.payload(service=service))
+                self.assertEqual(status, 200)
+                self.assertTrue(json.loads(body)["ok"])
+        for captured, service in zip(self.messages(), services):
+            mail = BytesParser(policy=email.policy.default).parsebytes(captured["mail"].encode())
+            self.assertIn("Формат: " + service, mail.get_content())
+
     def test_phone_contact_does_not_create_email_header(self):
         self.assertEqual(self.request(self.payload(contact="+375255032030"))[0], 200)
         mail = BytesParser(policy=email.policy.default).parsebytes(self.messages()[0]["mail"].encode())
@@ -138,7 +149,7 @@ with (root / 'messages.jsonl').open('a') as output:
     def test_invalid_seo_context_and_site_are_rejected(self):
         for fields in [{"context": "other"}, {"context": ["seo"]},
                        {"context": "seo", "service": "Лендинг"},
-                       {"service": "Комплексное SEO"}, {"site": ["https://example.by"]},
+                       {"site": ["https://example.by"]},
                        {"site": "javascript:alert(1)"}, {"site": "ftp://example.by"},
                        {"site": "example.by"}, {"site": "https://example.by/" + "a" * 2048},
                        {"site": "https://example.by/\nBcc: attacker@example.com"}]:
