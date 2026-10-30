@@ -35,6 +35,9 @@ h1{font-size:clamp(42px,4.6vw,64px);line-height:1.08;letter-spacing:-.055em;font
 h1>span{background:var(--gradient);background-clip:text;-webkit-background-clip:text;color:transparent}
 .hero-price{display:inline-flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:20px}
 .hero-price strong{font-size:24px;font-weight:650;letter-spacing:-.035em}
+.hero-price>.icon{align-self:center;width:20px;height:20px;color:var(--pink);transition:transform .2s ease}
+.hero-price:hover>strong{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.hero-price:hover>.icon{transform:translate(2px,2px)}
 .hero-lead{color:var(--muted);font-size:18px;line-height:1.7;margin:19px 0 26px;max-width:480px}
 .button{display:inline-flex;align-items:center;justify-content:space-between;gap:25px;min-height:56px;padding:14px 22px;border:0;border-radius:8px;font-size:var(--text-size);font-weight:600;line-height:1.45;transition:transform .2s,box-shadow .2s,background-color .2s}
 .primary{background:var(--gradient);color:#fff}
@@ -972,5 +975,5 @@ html.lenis{scroll-behavior:auto!important}
 @keyframes owner-portrait-float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-5px,0)}}
 @media(max-width:900px){.owner-name-row{gap:11px}.owner-name-row>strong{font-size:27px}.hero-personal-picture .owner-caption{padding-inline:8px}.owner-direct{padding:5px 10px}}
 @media(max-width:650px){.hero-personal-picture{max-width:440px;width:100%;margin-inline:auto}.hero-studio-owner{height:auto;aspect-ratio:4/3;margin-top:0}.hero-personal-picture .owner-caption{padding:16px 4px 0;margin-top:8px}.owner-name-row{gap:12px;margin-bottom:12px}.owner-name-row>strong{font-size:25px}.owner-direct{font-size:14px;padding:4px 10px;gap:7px}.owner-direct .icon{width:17px;height:17px}.owner-caption>p{font-size:14px;line-height:1.8}.owner-photo{mask-image:radial-gradient(ellipse at 50% 48%,#000 52%,rgba(0,0,0,.95) 67%,transparent 87%);-webkit-mask-image:radial-gradient(ellipse at 50% 48%,#000 52%,rgba(0,0,0,.95) 67%,transparent 87%)}}
-@media(prefers-reduced-motion:reduce){.owner-photo{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.owner-photo{animation:none!important}.hero-price>.icon{transition:none}.hero-price:hover>.icon{transform:none}}
 @media(max-width:650px){.owner-caption>p{padding-right:54px}}

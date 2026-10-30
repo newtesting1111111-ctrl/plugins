@@ -38,10 +38,18 @@ packageButtons.forEach(button => button.addEventListener('click', () => {
 }));
 promotion.addEventListener('change', syncPackage);
 form.elements.service.addEventListener('change', syncPackage);
-document.querySelectorAll('[data-service]').forEach(link => link.addEventListener('click', () => {
-  form.elements.service.value = link.dataset.service;
-  syncPackage();
-}));
+// Calculate-labelled links open the working calculator. The server markup keeps
+// the direct form destination available when JavaScript is disabled.
+const calculateSiteLink = document.querySelector('[data-calculate-site]');
+calculateSiteLink.setAttribute('href', '#calculator');
+document.querySelectorAll('[data-service]').forEach(link => {
+  link.setAttribute('href', '#calculator');
+  link.addEventListener('click', () => {
+    activateEstimate();
+    form.elements.service.value = link.dataset.service;
+    syncPackage();
+  });
+});
 // Also restores the package display when the browser restores form state.
 window.addEventListener('pageshow', syncPackage);
 syncPackage();
@@ -501,9 +509,14 @@ document.addEventListener('click', event => {
   if (target === null) return;
   event.preventDefault();
   history.pushState(null, '', hash);
+  // Lenis already includes CSS scroll-padding and scroll-margin. Applying the
+  // header offset here as well would leave twice the intended gap.
   smoothScroll.scrollTo(target, {
-    offset: target === 0 ? 0 : -document.querySelector('.header').getBoundingClientRect().height - 22,
     duration: 1.05,
     easing: value => 1 - Math.pow(1 - value, 4),
+    onComplete: event.detail === 0 && target !== 0 ? () => {
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    } : undefined,
   });
 });

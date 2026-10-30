@@ -14,10 +14,10 @@ header('Cache-Control: no-store');
   <meta name="description" content="Нужны заявки? Начнём с сайта от <?= site_e(site_money('landing')) ?>. Разработка, мобильная версия и формы. Контекстная реклама — от <?= site_e(site_money('adsMonthly')) ?>/мес., рекламный бюджет отдельно.">
   <link rel="icon" href="/favicon.svg">
   <link rel="preload" href="/fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/landing.css?v=journey-1">
+  <link rel="stylesheet" href="/assets/landing.css?v=journey-2">
   <script id="site-settings" type="application/json"><?= json_encode(['prices' => $settings['prices'], 'currency' => $settings['currency'], 'extras' => $settings['extras'], 'calculator' => $settings['calculator']], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?></script>
   <script src="/assets/vendor/lenis.min.js?v=1.3.26" defer></script>
-  <script src="/assets/landing.js?v=journey-1" defer></script>
+  <script src="/assets/landing.js?v=journey-2" defer></script>
 </head>
 <body>
   <svg class="icon-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -54,15 +54,15 @@ header('Cache-Control: no-store');
       <a class="header-contact" href="#contacts" data-open-contacts aria-haspopup="dialog" aria-controls="contacts-dialog" aria-expanded="false">Наши контакты <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
     </div>
   </header>
-  <main id="main">
+  <main id="main" tabindex="-1">
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero-grid">
         <div class="hero-copy">
           <p class="eyebrow"><span class="accent-line"></span> САЙТЫ ДЛЯ БИЗНЕСА В БЕЛАРУСИ</p>
           <h1 id="hero-title">Нужны заявки?<br><span>Начнём с сайта.</span></h1>
-          <div class="hero-price">Разработка <strong>от <?= site_e(site_money('landing')) ?></strong></div>
+          <a class="hero-price" href="#price" aria-label="Разработка от <?= site_e(site_money('landing')) ?> — посмотреть форматы и состав работ">Разработка <strong>от <?= site_e(site_money('landing')) ?></strong><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5 19 19M5 19h14V5"/></svg></a>
           <p class="hero-lead">Сделаем сайт для вашей услуги.<br>Поможем привлечь на него клиентов рекламой.</p>
-          <a class="button primary" href="#contact">Рассчитать мой сайт <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+          <a class="button primary" href="#contact" data-calculate-site>Рассчитать мой сайт <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
           <p class="button-note">Состав работ и цену согласуем до старта.</p>
           <div class="hero-tags"><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-phone"/></svg> Мобильная версия</span><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-message"/></svg> Формы связи</span></div>
         </div>

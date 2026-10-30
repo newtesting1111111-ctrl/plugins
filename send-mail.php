@@ -31,7 +31,7 @@ function respond(int $status, bool $ok, string $message): void
             . '<meta name="viewport" content="width=device-width,initial-scale=1">'
             . '<meta name="robots" content="noindex">'
             . '<title>' . $title . ' — uweb.by</title>'
-            . '<link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/landing.css?v=journey-1">'
+            . '<link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/landing.css?v=journey-2">'
             . '</head><body class="form-result-page"><header class="header"><div class="container header-inner">'
             . '<a class="logo" href="/" aria-label="uweb.by — на главную">uweb<span>.</span>by</a>'
             . '<a class="header-contact" href="/#contacts">Наши контакты</a></div></header>'

@@ -1,1 +1,6 @@
 DirectoryIndex index.php
+
+<IfModule mod_alias.c>
+    RedirectMatch 301 ^/(?:seo|ppc)(?:/index\.(?:html?|php))?/?$ /
+    RedirectMatch 301 ^/index\.html?$ /
+</IfModule>
