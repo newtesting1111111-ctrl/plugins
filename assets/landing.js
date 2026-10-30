@@ -18,5 +18,5 @@ form.addEventListener('submit',async event=>{
   if(!response.ok||result.ok!==true)throw new Error(result.message||'Не удалось отправить заявку.');
   status.textContent=result.message||'Спасибо! Заявка отправлена.';status.dataset.state='success';form.reset();
  }catch(error){status.textContent=error.name==='AbortError'?'Сервер не ответил вовремя. Напишите в Telegram или попробуйте позже.':(error.message==='Failed to fetch'?'Нет связи с сервером. Попробуйте позже или напишите в Telegram.':error.message);status.dataset.state='error';}
- finally{clearTimeout(timeout);button.disabled=false;form.removeAttribute('aria-busy');label.textContent='Обсудить задачу';}
+ finally{clearTimeout(timeout);button.disabled=false;form.removeAttribute('aria-busy');label.textContent='Получить расчёт стоимости';}
 });

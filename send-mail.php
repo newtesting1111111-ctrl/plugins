@@ -165,7 +165,7 @@ if (!$stored) {
 
 date_default_timezone_set('Europe/Minsk');
 $applicationTitles = [
-    'web' => 'Заявка на сайт и продвижение',
+    'web' => 'Заявка на разработку сайта',
     'seo' => 'Заявка на SEO-продвижение',
     'ppc' => 'Заявка на контекстную рекламу',
 ];
