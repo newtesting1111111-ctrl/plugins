@@ -1,9 +1,11 @@
 <?php
 declare(strict_types=1);
 
-// Fixed addresses prevent this endpoint from becoming an open mail relay.
-const MAIL_FROM = 'info@uweb.by';
-const MAIL_TO = 'sitehub24@gmail.com';
+// Only the trusted local settings determine mail addresses, never request fields.
+require_once __DIR__ . '/site.php';
+$siteSettings = site_settings();
+define('MAIL_FROM', $siteSettings['mail']['from']);
+define('MAIL_TO', $siteSettings['contacts']['email']);
 const MAX_BODY_BYTES = 16384;
 const RATE_WINDOW = 600;
 $formReturnPath = '/#contact';
@@ -21,6 +23,9 @@ function respond(int $status, bool $ok, string $message): void
         header('Content-Type: text/html; charset=UTF-8');
         $title = $ok ? 'Заявка отправлена' : 'Заявку не удалось отправить';
         $safeMessage = htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $fallbackContacts = site_contacts();
+        $contactUrl = site_e($fallbackContacts['telegram']['href'] ?? '/#contacts');
+        $contactLabel = isset($fallbackContacts['telegram']) ? 'Написать в Telegram' : 'Наши контакты';
         echo '<!doctype html><html lang="ru"><meta charset="utf-8">'
             . '<meta name="viewport" content="width=device-width,initial-scale=1">'
             . '<title>' . $title . ' — uweb.by</title>'
@@ -29,7 +34,7 @@ function respond(int $status, bool $ok, string $message): void
             . 'a{color:#425fe2;display:inline-block;margin:12px 20px 0 0}</style>'
             . '<main><strong>uweb.by</strong><h1>' . $title . '</h1><p>' . $safeMessage . '</p>'
             . '<a href="' . $formReturnPath . '">Вернуться на сайт</a>'
-            . '<a href="https://t.me/develop_by">Написать в Telegram</a></main></html>';
+            . '<a href="' . $contactUrl . '">' . $contactLabel . '</a></main></html>';
     }
     exit;
 }
@@ -68,7 +73,7 @@ if (strpos($contentType, 'application/json') === 0) {
     respond(415, false, 'Отправьте заявку через форму на сайте.');
 }
 
-foreach (['name', 'contact', 'service', 'message', 'website', 'context', 'site', 'promotion'] as $field) {
+foreach (['name', 'contact', 'service', 'message', 'website', 'context', 'site', 'promotion', 'estimate_source', 'campaigns', 'seo', 'extras'] as $field) {
     if (isset($data[$field]) && !is_string($data[$field])) {
         respond(422, false, 'Проверьте поля заявки.');
     }
@@ -110,6 +115,12 @@ if (preg_match('/\A.{1,80}\z/us', $name) !== 1
     respond(422, false, 'Проверьте имя, контакт и описание проекта.');
 }
 
+try {
+    $estimate = site_estimate($data);
+} catch (InvalidArgumentException $error) {
+    respond(422, false, $error->getMessage());
+}
+
 // The address is included in the email only; the server never requests it.
 if ($site !== '' && (strlen($site) > 2048
     || preg_match('/[\p{Cc}]/u', $site) !== 0
@@ -120,7 +131,7 @@ if ($site !== '' && (strlen($site) > 2048
 
 if (!function_exists('mail')) {
     error_log('uweb.by: PHP mail() is unavailable.');
-    respond(503, false, 'Сейчас не удалось отправить заявку. Напишите мне в Telegram.');
+    respond(503, false, 'Сейчас не удалось отправить заявку. Свяжитесь с нами через контакты на сайте.');
 }
 
 // Private temporary storage, shared lock for simultaneous requests. Only hashes
@@ -176,8 +187,9 @@ $applicationTitles = [
 $applicationTitle = $applicationTitles[$context];
 $body = $applicationTitle . " — uweb.by\n\n"
     . "Формат: $service\nИмя: $name\nКонтакт: $contact\n"
-    . ($promotion === 'ppc' ? "Продвижение: интересует контекстная реклама (услуга и рекламный бюджет оплачиваются отдельно).\n" : "Продвижение: пока только выбранная услуга.\n")
+    . ($promotion === 'ppc' ? "Продвижение: интересует контекстная реклама (услуга и рекламный бюджет оплачиваются отдельно).\n" : (!empty($estimate['withSeo']) ? "Продвижение: интересует SEO.\n" : "Продвижение: пока только выбранная услуга.\n"))
     . ($site !== '' ? "Сайт: $site\n" : '')
+    . site_estimate_text($estimate)
     . "\nО проекте:\n"
     . ($message !== '' ? $message : 'Обсудим при знакомстве.')
     . "\n\nОтправлено: " . date('d.m.Y H:i') . " (Минск)\n";
@@ -197,6 +209,6 @@ $sent = @mail(MAIL_TO, $subject, chunk_split(base64_encode($body), 76, "\r\n"),
     implode("\r\n", $headers), '-f' . MAIL_FROM);
 if (!$sent) {
     error_log('uweb.by: PHP mail() rejected the application.');
-    respond(502, false, 'Не удалось отправить заявку. Попробуйте позже или напишите мне в Telegram.');
+    respond(502, false, 'Не удалось отправить заявку. Попробуйте позже или свяжитесь с нами через контакты на сайте.');
 }
 respond(200, true, 'Заявка отправлена. Спасибо! Свяжусь с вами по указанному контакту.');
