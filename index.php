@@ -14,7 +14,7 @@ header('Cache-Control: no-store');
   <meta name="description" content="Нужны заявки? Начнём с сайта от <?= site_e(site_money('landing')) ?>. Разработка, мобильная версия и формы. Контекстная реклама — от <?= site_e(site_money('adsMonthly')) ?>/мес., рекламный бюджет отдельно.">
   <link rel="icon" href="/favicon.svg">
   <link rel="preload" href="/fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/landing.css?v=personal-1">
+  <link rel="stylesheet" href="/assets/landing.css?v=gradient-header-1">
   <script id="site-settings" type="application/json"><?= json_encode(['prices' => $settings['prices'], 'currency' => $settings['currency'], 'extras' => $settings['extras'], 'calculator' => $settings['calculator']], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?></script>
   <script src="/assets/vendor/lenis.min.js?v=1.3.26" defer></script>
   <script src="/assets/landing.js?v=personal-1" defer></script>
@@ -67,8 +67,14 @@ header('Cache-Control: no-store');
           <div class="hero-tags"><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-phone"/></svg> Мобильная версия</span><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-message"/></svg> Формы связи</span></div>
         </div>
         <figure class="hero-picture hero-personal-picture" aria-labelledby="hero-owner-name" aria-describedby="hero-owner-promise">
-          <div class="hero-studio hero-studio-owner"><div class="hero-aurora aurora-one" aria-hidden="true"></div><div class="hero-aurora aurora-two" aria-hidden="true"></div><div class="hero-fine-orbit" aria-hidden="true"></div><img class="owner-photo" src="/images/developer.png" width="1448" height="1086" alt="<?= site_e($settings['contacts']['name']) ?> — ваш исполнитель по разработке сайта" fetchpriority="high" decoding="async"></div>
-          <figcaption class="owner-caption"><div class="owner-name-row"><strong id="hero-owner-name"><?= site_e($settings['contacts']['name']) ?></strong><span class="owner-direct"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-message"/></svg>Прямая связь</span></div><p id="hero-owner-promise">Лично веду ваш проект и отвечаю за согласованные работы — от первой задачи до запуска.</p></figcaption>
+          <div class="hero-studio hero-studio-owner">
+            <div class="hero-aurora aurora-one" aria-hidden="true"></div><div class="hero-aurora aurora-two" aria-hidden="true"></div><div class="hero-fine-orbit" aria-hidden="true"></div>
+            <picture class="owner-portrait">
+              <source type="image/webp" srcset="/images/developer-768.webp 768w, /images/developer.webp 1448w" sizes="(max-width: 480px) calc(100vw - 40px), (max-width: 650px) 440px, (max-width: 1320px) 44vw, 574px">
+              <img class="owner-photo" src="/images/developer.jpg" width="1448" height="1086" alt="<?= site_e($settings['contacts']['name']) ?> — ваш исполнитель по разработке сайта" fetchpriority="high" decoding="async">
+            </picture>
+          </div>
+          <figcaption class="owner-caption"><div class="owner-name-row"><strong id="hero-owner-name"><?= site_e($settings['contacts']['name']) ?></strong><span class="owner-direct"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-message"/></svg>Прямая связь</span></div><p id="hero-owner-promise">Лично веду ваш проект — от первой задачи до запуска. За сроки и качество отвечаю сам.</p></figcaption>
         </figure>
       </div>
     </section>

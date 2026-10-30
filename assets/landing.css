@@ -2,7 +2,7 @@
 @font-face{font-family:Golos;src:url('/fonts/golos-text-latin.woff2') format('woff2');font-weight:400 900;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 :root{--text-size:16px;--first:#a0107b;--gradient:linear-gradient(270deg,var(--first,#a0107b),#fc2c87);--ink:#291b2c;--muted:#706373;--line:#e8dfe8;--soft:#fcf7fb;--pink:#b31979;--dark:#261329}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:110px}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
 body{margin:0;background:#fff;color:var(--ink);font:var(--text-size)/1.6 Golos,Arial,sans-serif}
 h1,h2,h3,p,figure{margin:0}
 a{color:inherit;text-decoration:none}
@@ -17,13 +17,16 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .icon{display:inline-block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle;flex-shrink:0}
 .icon-defs{position:absolute;width:0;height:0;overflow:hidden}
 .arrow{width:21px;height:21px}
-.header{position:sticky;top:0;z-index:30;background:#fffffffa;border-bottom:1px solid var(--line)}
-.header-inner{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+.header{position:sticky;top:0;z-index:30;background:var(--gradient);color:#fff;border-bottom:1px solid #ffffff26}
+.header-inner{min-height:65px;display:flex;align-items:center;justify-content:space-between;gap:28px}
 .logo{font-size:33px;font-weight:850;letter-spacing:-2px;line-height:1}
 .logo span{color:#ed238b}
+.header .logo span{color:#ffd9ed}
 .header nav{display:flex;gap:27px}
-.header nav a:hover{color:var(--pink)}
-.header-contact{display:inline-flex;align-items:center;gap:23px;border:1px solid #dfcddd;border-radius:8px;padding:11px 17px;font-weight:500}
+.header nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.header a:focus-visible{outline-color:#fff}
+.header-contact{display:inline-flex;align-items:center;gap:23px;border:1px solid #ffffff99;border-radius:8px;padding:11px 17px;background:#ffffff0d;font-weight:500;transition:background-color .2s ease}
+.header-contact:hover{background:#ffffff26}
 .eyebrow{display:flex;align-items:center;gap:10px;font-size:var(--text-size);line-height:1.5;font-weight:600;letter-spacing:.025em}
 .accent-line{width:24px;height:3px;flex-shrink:0;background:var(--gradient)}
 .hero{overflow:hidden;padding:48px 0 40px;background:radial-gradient(ellipse at 86% 25%,#f9e2f1,transparent 55%),#fdf9fc}
@@ -270,7 +273,6 @@ footer{padding:29px 0}
 }
 @media(max-width:900px){
  .header nav{display:none}
- .header-inner{min-height:76px}
  .hero{padding-top:36px}
  .hero-grid{gap:26px;grid-template-columns:1.1fr 1fr}
  h1{font-size:40px}
@@ -329,7 +331,7 @@ footer{padding:29px 0}
 @media(max-width:650px){
  html{scroll-padding-top:90px}
  .container{width:calc(100% - 40px)}
- .header-inner{min-height:70px;gap:16px}
+ .header-inner{gap:16px}
  .header .logo{font-size:29px}
  .header-contact{font-size:var(--text-size);padding:9px 11px;gap:12px}
  .header-contact .arrow{width:18px;height:18px}
@@ -933,6 +935,7 @@ html.lenis{scroll-behavior:auto!important}
 /* A personal first contact: the original owner portrait and an explicit commitment. */
 .hero-personal-picture{min-width:0}
 .hero-studio-owner{height:auto;aspect-ratio:4/3;position:relative;isolation:isolate}
+.owner-portrait{display:block}
 .owner-photo{position:relative;z-index:1;display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;mask-image:radial-gradient(ellipse at 50% 48%,#000 49%,rgba(0,0,0,.95) 64%,transparent 85%);-webkit-mask-image:radial-gradient(ellipse at 50% 48%,#000 49%,rgba(0,0,0,.95) 64%,transparent 85%)}
 .hero-studio-owner .aurora-one{inset:5% -7% 0;background:radial-gradient(ellipse at 40% 40%,#cfd7ff70,transparent 68%),radial-gradient(ellipse at 80% 65%,#f0b7db4d,transparent 70%)}
 .hero-studio-owner .hero-fine-orbit{inset:5% 0 0;border-color:#c9b3df55}
