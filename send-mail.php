@@ -68,7 +68,7 @@ if (strpos($contentType, 'application/json') === 0) {
     respond(415, false, 'Отправьте заявку через форму на сайте.');
 }
 
-foreach (['name', 'contact', 'service', 'message', 'website', 'context', 'site'] as $field) {
+foreach (['name', 'contact', 'service', 'message', 'website', 'context', 'site', 'promotion'] as $field) {
     if (isset($data[$field]) && !is_string($data[$field])) {
         respond(422, false, 'Проверьте поля заявки.');
     }
@@ -90,6 +90,10 @@ $contact = trim($data['contact'] ?? '');
 $service = trim($data['service'] ?? '');
 $message = trim($data['message'] ?? '');
 $site = trim($data['site'] ?? '');
+$promotion = $data['promotion'] ?? '';
+if (!in_array($promotion, ['', 'ppc'], true)) {
+    respond(422, false, 'Выберите вариант продвижения через форму на сайте.');
+}
 $serviceGroups = [
     'web' => ['Лендинг', 'Сайт компании', 'Интернет-магазин', 'Индивидуальное решение', 'План: сайт + реклама + SEO', 'Контекст Start', 'Контекст Standart', 'Контекст Pro', 'Комплексное SEO', 'Локальное SEO', 'SEO интернет-магазина', 'Технический аудит'],
     'seo' => ['Комплексное SEO', 'Локальное SEO', 'SEO интернет-магазина', 'Технический аудит'],
@@ -172,6 +176,7 @@ $applicationTitles = [
 $applicationTitle = $applicationTitles[$context];
 $body = $applicationTitle . " — uweb.by\n\n"
     . "Формат: $service\nИмя: $name\nКонтакт: $contact\n"
+    . ($promotion === 'ppc' ? "Продвижение: интересует контекстная реклама (услуга и рекламный бюджет оплачиваются отдельно).\n" : "Продвижение: пока только выбранная услуга.\n")
     . ($site !== '' ? "Сайт: $site\n" : '')
     . "\nО проекте:\n"
     . ($message !== '' ? $message : 'Обсудим при знакомстве.')
