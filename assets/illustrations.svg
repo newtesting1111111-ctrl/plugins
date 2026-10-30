@@ -44,23 +44,6 @@
       <circle cx="578" cy="74" r="20" fill="#fff" stroke="#b45a91"/><path d="m570 74 6 6 12-13" stroke="url(#art-accent)" stroke-width="1.8"/>
     </g>
   </symbol>
-  <symbol id="art-hero" viewBox="0 0 640 480">
-    <g fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M44 94h552M44 380h552M80 44v380M486 44v380" stroke="#dbc5d5" stroke-opacity=".6" stroke-dasharray="2 8"/>
-      <rect x="77" y="80" width="414" height="282" rx="19" fill="#fff" fill-opacity=".88" filter="url(#art-shadow)"/>
-      <path d="M77 119h414" stroke="#d6bccf"/><g stroke="#bfa2b6"><circle cx="100" cy="100" r="4"/><circle cx="117" cy="100" r="4"/><circle cx="134" cy="100" r="4"/><rect x="210" y="92" width="151" height="16" rx="8"/></g>
-      <path d="M107 158h133M107 179h101" stroke="#7d536d" stroke-width="2.2"/><path d="M107 212h151M107 231h118" stroke="#c9acbf"/>
-      <rect x="306" y="150" width="151" height="121" rx="11" fill="#fef9fc" stroke="#c8a4bd"/><circle cx="433" cy="176" r="10" stroke="#c18bad"/><path d="m323 249 39-43 33 31 20-19 26 31" stroke="#bb7a9f"/>
-      <rect x="107" y="292" width="100" height="43" rx="7" stroke="#cfb3c6"/><rect x="222" y="292" width="100" height="43" rx="7" stroke="#cfb3c6"/><rect x="337" y="292" width="120" height="43" rx="7" stroke="#cfb3c6"/>
-      <path d="M121 313h57M236 313h58M351 313h75" stroke="#d4b9cc"/>
-      <rect x="434" y="219" width="115" height="213" rx="22" fill="#fff" filter="url(#art-shadow)" stroke="#9c6487"/>
-      <path d="M468 233h48" stroke="#c5a7bb"/><rect x="450" y="252" width="84" height="81" rx="7" fill="#fcf1f8" stroke="#d3b3c9"/>
-      <path d="M463 272h50M463 285h37M463 298h44" stroke="#bd88a9"/>
-      <path d="M451 353h74M451 367h56" stroke="#c7a5bc"/><rect x="451" y="388" width="21" height="18" rx="4" stroke="#d5b6cc"/><rect x="482" y="388" width="21" height="18" rx="4" stroke="#d5b6cc"/><rect x="513" y="388" width="21" height="18" rx="4" stroke="#d5b6cc"/>
-      <path class="art-route" d="M491 119c43 0 26-42 53-42M173 363c-24 0-19 43-48 43" stroke="url(#art-accent)" stroke-dasharray="4 7"/>
-      <circle cx="561" cy="65" r="28" fill="#fff" stroke="#b95c97"/><circle cx="557" cy="61" r="8" stroke="url(#art-accent)"/><path d="m563 67 8 8" stroke="url(#art-accent)"/>
-      <circle cx="100" cy="408" r="27" fill="#fff" stroke="#b95c97"/><path d="M87 398h25v16H97l-7 6v-6h-3v-16ZM93 404h13M93 409h9" stroke="url(#art-accent)"/>
-    </g>
-  </symbol>
+
 </defs>
 </svg>

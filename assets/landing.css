@@ -930,3 +930,21 @@ html.lenis{scroll-behavior:auto!important}
 @media(prefers-reduced-motion:reduce){.hero-studio *{animation:none!important}.tariff-illustration{transition:none}.reveal-ready{opacity:1!important;translate:none!important;filter:none!important;transition:none!important}html{scroll-behavior:auto}}
 .calculator-scope-note{font-size:var(--text-size);line-height:1.7;color:var(--muted);margin-top:16px}
 @media(max-width:650px){.hero-picture figcaption{padding-right:56px}}
+/* A personal first contact: the original owner portrait and an explicit commitment. */
+.hero-personal-picture{min-width:0}
+.hero-studio-owner{height:auto;aspect-ratio:4/3;position:relative;isolation:isolate}
+.owner-photo{position:relative;z-index:1;display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;mask-image:radial-gradient(ellipse at 50% 48%,#000 49%,rgba(0,0,0,.95) 64%,transparent 85%);-webkit-mask-image:radial-gradient(ellipse at 50% 48%,#000 49%,rgba(0,0,0,.95) 64%,transparent 85%)}
+.hero-studio-owner .aurora-one{inset:5% -7% 0;background:radial-gradient(ellipse at 40% 40%,#cfd7ff70,transparent 68%),radial-gradient(ellipse at 80% 65%,#f0b7db4d,transparent 70%)}
+.hero-studio-owner .hero-fine-orbit{inset:5% 0 0;border-color:#c9b3df55}
+.motion-enabled .owner-photo{animation:owner-portrait-float 12s ease-in-out infinite}
+.hero-personal-picture .owner-caption{max-width:500px;margin:11px auto 0;padding:18px 18px 0;text-align:left;border-top:1px solid #e7d7e4;color:var(--ink)}
+.owner-name-row{display:flex;align-items:center;gap:17px;flex-wrap:wrap;margin-bottom:13px}
+.owner-name-row>strong{font-size:30px;font-weight:650;letter-spacing:-.045em;line-height:1.2;color:var(--ink)}
+.owner-direct{display:inline-flex;align-items:center;gap:8px;padding:5px 11px;border:1px solid #e9c4dc;border-radius:20px;background:#fff7fc;color:#a62d78;font-size:16px;line-height:1.5}
+.owner-direct .icon{width:18px;height:18px}
+.owner-caption>p{font-size:16px;line-height:1.8;color:var(--muted);max-width:460px}
+@keyframes owner-portrait-float{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(0,-5px,0)}}
+@media(max-width:900px){.owner-name-row{gap:11px}.owner-name-row>strong{font-size:27px}.hero-personal-picture .owner-caption{padding-inline:8px}.owner-direct{padding:5px 10px}}
+@media(max-width:650px){.hero-personal-picture{max-width:440px;width:100%;margin-inline:auto}.hero-studio-owner{height:auto;aspect-ratio:4/3;margin-top:0}.hero-personal-picture .owner-caption{padding:16px 4px 0;margin-top:8px}.owner-name-row{gap:12px;margin-bottom:12px}.owner-name-row>strong{font-size:25px}.owner-direct{font-size:14px;padding:4px 10px;gap:7px}.owner-direct .icon{width:17px;height:17px}.owner-caption>p{font-size:14px;line-height:1.8}.owner-photo{mask-image:radial-gradient(ellipse at 50% 48%,#000 52%,rgba(0,0,0,.95) 67%,transparent 87%);-webkit-mask-image:radial-gradient(ellipse at 50% 48%,#000 52%,rgba(0,0,0,.95) 67%,transparent 87%)}}
+@media(prefers-reduced-motion:reduce){.owner-photo{animation:none!important}}
+@media(max-width:650px){.owner-caption>p{padding-right:54px}}
