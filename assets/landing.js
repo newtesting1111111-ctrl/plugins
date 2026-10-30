@@ -5,6 +5,7 @@ const submitLabel = document.querySelector('#submit-label');
 const promotion = document.querySelector('#promotion');
 const packageButtons = [...document.querySelectorAll('[data-package]')];
 const siteSettings = JSON.parse(document.querySelector('#site-settings').textContent);
+let smoothScroll;
 const priceFormatter = new Intl.NumberFormat('ru-BY', { maximumFractionDigits: 2 });
 const formatPrices = {
   'Лендинг': siteSettings.prices.landing,
@@ -115,11 +116,13 @@ contactOpeners.forEach(opener => opener.addEventListener('click', event => {
   contactOpener = opener;
   contactDialog.showModal();
   document.body.classList.add('dialog-open');
+  smoothScroll?.stop();
   contactOpeners.forEach(link => link.setAttribute('aria-expanded', 'true'));
   contactDialog.querySelector('.dialog-close').focus({ preventScroll: true });
 }));
 contactDialog.addEventListener('close', () => {
   document.body.classList.remove('dialog-open');
+  smoothScroll?.start();
   contactOpeners.forEach(link => link.setAttribute('aria-expanded', 'false'));
   if (contactOpener?.isConnected) contactOpener.focus({ preventScroll: true });
 });
@@ -136,28 +139,17 @@ contactDialog.querySelectorAll('.contact-method').forEach(link => {
 // Motion is decorative. Content and contacts remain available without JavaScript.
 const root = document.documentElement;
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
-const motionButton = document.querySelector('.motion-toggle');
 const heroStudio = document.querySelector('.hero-studio');
 const charts = [...document.querySelectorAll('.index-chart')];
-const revealItems = [...document.querySelectorAll('.path-card, .price-card, .launch-card, .result-card, .contact-directory-grid .contact-method')];
-let motionPaused = false;
+const revealItems = [...document.querySelectorAll('.path-card, .price-card, .experience-box, .trust-grid article, .process-box, .launch-card, .result-card, .contact-directory-grid .contact-method')];
 function updateMotion() {
   const reduced = motionPreference.matches;
   root.classList.toggle('motion-enabled', !reduced);
-  root.classList.toggle('motion-paused', motionPaused);
-  motionButton.hidden = reduced;
-  motionButton.setAttribute('aria-pressed', String(motionPaused));
-  motionButton.querySelector('span').textContent = motionPaused ? 'Запустить движение' : 'Остановить движение';
-  motionButton.querySelector('use').setAttribute('href', motionPaused ? '#icon-play' : '#icon-pause');
-  if (reduced || motionPaused) {
+  if (reduced) {
     charts.forEach(chart => chart.classList.add('is-filled'));
     revealItems.forEach(item => item.classList.add('is-shown'));
   }
 }
-motionButton.addEventListener('click', () => {
-  motionPaused = !motionPaused;
-  updateMotion();
-});
 motionPreference.addEventListener('change', updateMotion);
 updateMotion();
 if ('IntersectionObserver' in window && !motionPreference.matches) {
@@ -208,7 +200,7 @@ const askedTopics = new Set();
 let faqTimer;
 let faqVersion = 0;
 function scrollFaq() {
-  faqLog.scrollTo({ top: faqLog.scrollHeight, behavior: motionPreference.matches || motionPaused ? 'auto' : 'smooth' });
+  faqLog.scrollTo({ top: faqLog.scrollHeight, behavior: motionPreference.matches ? 'auto' : 'smooth' });
 }
 function addFaqMessage(text, className) {
   const message = document.createElement('div');
@@ -254,7 +246,7 @@ faqTopics.forEach(topic => {
       updateFaqButtons();
       scrollFaq();
       if (keyboard) faqLog.focus({ preventScroll: true });
-    }, motionPreference.matches || motionPaused ? 0 : 650);
+    }, motionPreference.matches ? 0 : 650);
   });
   faqChoices.append(button);
 });
@@ -292,7 +284,7 @@ function selectProcess(index, focus = false) {
   const tab = processTabs[processIndex];
   const left = tab.getBoundingClientRect().left - processTabList.getBoundingClientRect().left + processTabList.scrollLeft;
   const scrollTarget = left - (processTabList.clientWidth - tab.offsetWidth) / 2;
-  processTabList.scrollTo({ left: scrollTarget, behavior: motionPreference.matches || motionPaused ? 'auto' : 'smooth' });
+  processTabList.scrollTo({ left: scrollTarget, behavior: motionPreference.matches ? 'auto' : 'smooth' });
   if (focus) tab.focus({ preventScroll: true });
 }
 processTabList.setAttribute('role', 'tablist');
@@ -363,6 +355,8 @@ function renderCalculator() {
   calculatorBox.querySelector('[data-campaign-delta="1"]').disabled = campaigns >= siteSettings.calculator.maxCampaigns;
   const base = siteSettings.prices[calcFormatKeys[selectedFormat]];
   let oneTime = base;
+  let extrasMonthly = 0;
+  let hasMonthlyExtras = false;
   const unknown = [];
   const extras = [];
   const breakdown = document.querySelector('#calc-breakdown');
@@ -374,18 +368,26 @@ function renderCalculator() {
     if (extra.price === null) {
       unknown.push(extra.label);
       breakdown.append(estimateRow(extra.label, 'Уточним'));
+    } else if (extra.type === 'monthly') {
+      extrasMonthly += extra.price;
+      hasMonthlyExtras = true;
+      breakdown.append(estimateRow(extra.label, `${estimateMoney(extra.price)}/мес.`));
+    } else if (extra.type === 'percent') {
+      const amount = Math.round((base * extra.price / 100 + Number.EPSILON) * 100) / 100;
+      oneTime += amount;
+      breakdown.append(estimateRow(extra.label, `+${priceFormatter.format(extra.price)}% · ${estimateMoney(amount)}`));
     } else {
       oneTime += extra.price;
-      breakdown.append(estimateRow(extra.label, `+${estimateMoney(extra.price)}`));
+      breakdown.append(estimateRow(extra.label, extra.price === 0 ? 'Бесплатно' : `+${estimateMoney(extra.price)}`));
     }
   });
   const adsMonthly = calcAds.checked ? siteSettings.prices.adsMonthly + (campaigns - 1) * siteSettings.prices.additionalCampaign : 0;
   const seoMonthly = calcSeo.checked ? siteSettings.prices.seoMonthly : 0;
-  const monthly = adsMonthly + seoMonthly;
+  const monthly = adsMonthly + seoMonthly + extrasMonthly;
   if (calcAds.checked) breakdown.append(estimateRow(`Реклама · кампаний: ${campaigns}`, `от ${estimateMoney(adsMonthly)}/мес.`));
   if (calcSeo.checked) breakdown.append(estimateRow('SEO', `от ${estimateMoney(seoMonthly)}/мес.`));
   document.querySelector('#calc-one-time').textContent = `от ${estimateMoney(oneTime)}`;
-  document.querySelector('#calc-monthly-block').hidden = !(calcAds.checked || calcSeo.checked);
+  document.querySelector('#calc-monthly-block').hidden = !(calcAds.checked || calcSeo.checked || hasMonthlyExtras);
   document.querySelector('#calc-monthly').textContent = `от ${estimateMoney(monthly)}`;
   document.querySelector('#calc-ad-budget').hidden = !calcAds.checked;
   const unknownNote = document.querySelector('#calc-unknown');
@@ -399,7 +401,7 @@ function renderCalculator() {
     form.elements.extras.value = extras.join(',');
     const lines = document.querySelector('#form-estimate-lines');
     lines.replaceChildren(estimateRow('Разработка', `от ${estimateMoney(oneTime)}`));
-    if (calcAds.checked || calcSeo.checked) lines.append(estimateRow('Продвижение', `от ${estimateMoney(monthly)}/мес.`));
+    if (calcAds.checked || calcSeo.checked || hasMonthlyExtras) lines.append(estimateRow('Ежемесячно', `от ${estimateMoney(monthly)}/мес.`));
     if (extras.length) {
       const extraLine = document.createElement('p');
       extraLine.textContent = `Допзадачи: ${extras.map(id => siteSettings.extras[id].label).join(', ')}.`;
@@ -411,7 +413,7 @@ function renderCalculator() {
       lines.append(extraNote);
     }
   }
-  document.querySelector('#calculator-live').textContent = `Разработка от ${estimateMoney(oneTime)}${monthly ? `; продвижение от ${estimateMoney(monthly)} в месяц` : ''}${unknown.length ? '; допработы требуют отдельной оценки' : ''}.`;
+  document.querySelector('#calculator-live').textContent = `Разработка от ${estimateMoney(oneTime)}${monthly ? `; ежемесячно от ${estimateMoney(monthly)}` : ''}${unknown.length ? '; допработы требуют отдельной оценки' : ''}.`;
 }
 calcFormatInputs.forEach(input => input.addEventListener('change', () => {
   activateEstimate();
@@ -467,4 +469,37 @@ contactDialog.addEventListener('keydown', event => {
     event.preventDefault();
     first.focus();
   }
+});
+
+// Smooth wheel scrolling on desktop; native scrolling for touch and reduced motion.
+const smoothEligibility = matchMedia('(min-width: 901px) and (pointer: fine)');
+function configureSmoothScroll() {
+  const enabled = smoothEligibility.matches && !motionPreference.matches && typeof Lenis !== 'undefined';
+  if (enabled && !smoothScroll) {
+    smoothScroll = new Lenis({ autoRaf: true, lerp: 0.085, smoothWheel: true, syncTouch: false, anchors: false });
+    if (contactDialog.open) smoothScroll.stop();
+  } else if (!enabled && smoothScroll) {
+    smoothScroll.destroy();
+    smoothScroll = undefined;
+  }
+}
+smoothEligibility.addEventListener('change', configureSmoothScroll);
+motionPreference.addEventListener('change', configureSmoothScroll);
+configureSmoothScroll();
+document.addEventListener('click', event => {
+  if (event.defaultPrevented || !smoothScroll || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const link = event.target.closest('a[href^="#"]');
+  if (!link) return;
+  const hash = link.getAttribute('href');
+  let target;
+  try { target = hash === '#' ? 0 : document.getElementById(decodeURIComponent(hash.slice(1))); }
+  catch { return; }
+  if (target === null) return;
+  event.preventDefault();
+  history.pushState(null, '', hash);
+  smoothScroll.scrollTo(target, {
+    offset: target === 0 ? 0 : -document.querySelector('.header').getBoundingClientRect().height - 22,
+    duration: 1.05,
+    easing: value => 1 - Math.pow(1 - value, 4),
+  });
 });

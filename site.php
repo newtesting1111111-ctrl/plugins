@@ -43,6 +43,11 @@ function site_settings(): array
         }
         $extraPrice = $extra['price'] ?? null;
         $candidate['extras'][$id]['price'] = $extraPrice;
+        $type = $extra['type'] ?? 'fixed';
+        if (!in_array($type, ['fixed', 'monthly', 'percent'], true)) {
+            throw new RuntimeException('Тип допзадачи: fixed, monthly или percent.');
+        }
+        $candidate['extras'][$id]['type'] = $type;
         if ($extraPrice !== null && ((!is_int($extraPrice) && !is_float($extraPrice))
             || !is_finite((float) $extraPrice) || $extraPrice < 0)) {
             throw new RuntimeException('Цена допработы должна быть числом или null.');
@@ -51,6 +56,25 @@ function site_settings(): array
     $maxCampaigns = $candidate['calculator']['maxCampaigns'] ?? null;
     if (!is_int($maxCampaigns) || $maxCampaigns < 1 || $maxCampaigns > 50) {
         throw new RuntimeException('maxCampaigns: целое число от 1 до 50.');
+    }
+    $faq = $candidate['faq'] ?? [];
+    if (!is_array($faq)) throw new RuntimeException('FAQ должен быть массивом вопросов.');
+    $ids = [];
+    $candidate['faq'] = [];
+    foreach (array_values($faq) as $index => $item) {
+        if (!is_array($item) || !is_string($item['question'] ?? null) || trim($item['question']) === ''
+            || !is_string($item['answer'] ?? null) || trim($item['answer']) === '') {
+            throw new RuntimeException('У каждого вопроса FAQ должны быть question и answer.');
+        }
+        $id = $item['id'] ?? 'question-' . ($index + 1);
+        if (!is_string($id) || preg_match('/\A[a-zA-Z0-9_-]{1,60}\z/', $id) !== 1) {
+            throw new RuntimeException('ID вопроса: буквы, цифры, дефис и подчёркивание.');
+        }
+        $baseId = $id;
+        $suffix = $index + 1;
+        while (in_array($id, $ids, true)) $id = $baseId . '-' . $suffix++;
+        $ids[] = $id;
+        $candidate['faq'][] = ['id' => $id, 'question' => $item['question'], 'answer' => $item['answer']];
     }
     $settings = $candidate;
     return $settings;
@@ -122,28 +146,29 @@ function site_contact_cards(): void
     }
 }
 
+function site_format_money($value): string
+{
+    return number_format($value, floor($value) === (float) $value ? 0 : 2, ',', ' ') . ' ' . site_settings()['currency'];
+}
+
+function site_extra_rate(array $extra): string
+{
+    if ($extra['price'] === null) return 'Стоимость уточним';
+    if ($extra['type'] === 'percent') return '+' . number_format($extra['price'], floor($extra['price']) === (float) $extra['price'] ? 0 : 2, ',', ' ') . '% от стоимости разработки';
+    if ($extra['type'] === 'monthly') return site_format_money($extra['price']) . '/мес.';
+    return $extra['price'] == 0 ? 'Бесплатно' : '+' . site_format_money($extra['price']);
+}
+
 function site_faq(): array
 {
-    return [
-        ['id' => 'price', 'question' => 'Сколько стоит сайт?',
-            'answer' => 'Лендинг — от ' . site_money('landing') . ".\nСайт компании — от " . site_money('company')
-                . ".\nИнтернет-магазин — от " . site_money('shop') . ".\nИтоговую цену согласуем после обсуждения объёма."],
-        ['id' => 'leads', 'question' => 'Когда появятся заявки?',
-            'answer' => 'После запуска сайту нужны посетители. Реклама помогает их привлечь. Число обращений зависит от спроса, предложения, бюджета и удобства сайта — фиксированное количество заявок не обещаем.'],
-        ['id' => 'format', 'question' => 'Лендинг или сайт компании?',
-            'answer' => 'Для одной услуги и рекламы обычно достаточно лендинга. Для нескольких направлений лучше подойдёт сайт компании с отдельными страницами. Подберём формат под вашу задачу и бюджет.'],
-        ['id' => 'scope', 'question' => 'Что входит в разработку?',
-            'answer' => 'Структура, дизайн, мобильная версия, формы обращения, запуск и передача доступов. Количество страниц, материалы и дополнительные интеграции согласуем до начала работ.'],
-        ['id' => 'time', 'question' => 'Сколько времени займёт работа?',
-            'answer' => 'Срок зависит от формата, функций и готовности материалов. Назовём срок вместе со стоимостью до начала разработки.'],
-        ['id' => 'ads', 'question' => 'Сколько стоит реклама?',
-            'answer' => 'Настройка и ведение одной кампании — от ' . site_money('adsMonthly') . '/мес. Каждая следующая — +'
-                . site_money('additionalCampaign') . '/мес. Бюджет на клики оплачивается отдельно. Можно начать только с сайта.'],
-        ['id' => 'seo', 'question' => 'А SEO можно подключить?',
-            'answer' => 'Да. Комплексное SEO — от ' . site_money('seoMonthly') . '/мес. Обсудим его как отдельный канал привлечения после запуска сайта.'],
-        ['id' => 'technology', 'question' => 'На чём вы делаете сайты?',
-            'answer' => 'Используем собственный код и CMS под задачу. Выбор зависит от функций, бюджета и того, как вы планируете редактировать сайт.'],
-    ];
+    $settings = site_settings();
+    $tokens = [];
+    foreach ($settings['prices'] as $key => $price) $tokens['{price:' . $key . '}'] = site_money($key);
+    foreach ($settings['extras'] as $key => $extra) $tokens['{extra:' . $key . '}'] = site_extra_rate($extra);
+    return array_map(static function ($item) use ($tokens): array {
+        $item['answer'] = strtr($item['answer'], $tokens);
+        return $item;
+    }, $settings['faq']);
 }
 
 function site_process(): array
@@ -190,21 +215,38 @@ function site_estimate(array $data): array
     $extraValue = $data['extras'] ?? '';
     if (!is_string($extraValue) || strlen($extraValue) > 2000) throw new InvalidArgumentException('Проверьте дополнительные работы.');
     $extraIds = $extraValue === '' ? [] : array_values(array_unique(explode(',', $extraValue)));
-    $oneTime = $settings['prices'][$formats[$service]];
+    $base = $settings['prices'][$formats[$service]];
+    $oneTime = $base;
+    $extrasMonthly = 0;
+    $hasMonthlyExtras = false;
     $extraLabels = [];
+    $extraDetails = [];
     $unknown = [];
     foreach ($extraIds as $id) {
         if (!array_key_exists($id, $settings['extras'])) throw new InvalidArgumentException('Неизвестная дополнительная работа.');
         $extra = $settings['extras'][$id];
         $extraLabels[] = $extra['label'];
-        if ($extra['price'] === null) $unknown[] = $extra['label'];
-        else $oneTime += $extra['price'];
+        $amount = null;
+        if ($extra['price'] === null) {
+            $unknown[] = $extra['label'];
+        } elseif ($extra['type'] === 'monthly') {
+            $amount = $extra['price'];
+            $extrasMonthly += $amount;
+            $hasMonthlyExtras = true;
+        } elseif ($extra['type'] === 'percent') {
+            $amount = round($base * $extra['price'] / 100, 2);
+            $oneTime += $amount;
+        } else {
+            $amount = $extra['price'];
+            $oneTime += $amount;
+        }
+        $extraDetails[] = ['label' => $extra['label'], 'type' => $extra['type'], 'rate' => $extra['price'], 'amount' => $amount];
     }
     $ads = ($data['promotion'] ?? '') === 'ppc';
     $adsMonthly = $ads ? $settings['prices']['adsMonthly'] + ($campaigns - 1) * $settings['prices']['additionalCampaign'] : 0;
     $seoMonthly = $seo === '1' ? $settings['prices']['seoMonthly'] : 0;
-    return ['oneTime' => $oneTime, 'monthly' => $adsMonthly + $seoMonthly, 'adsMonthly' => $adsMonthly,
-        'seoMonthly' => $seoMonthly, 'withAds' => $ads, 'withSeo' => $seo === '1', 'campaigns' => $campaigns, 'extras' => $extraLabels, 'unknown' => $unknown];
+    return ['oneTime' => $oneTime, 'monthly' => $adsMonthly + $seoMonthly + $extrasMonthly, 'extrasMonthly' => $extrasMonthly, 'hasMonthlyExtras' => $hasMonthlyExtras, 'adsMonthly' => $adsMonthly,
+        'seoMonthly' => $seoMonthly, 'withAds' => $ads, 'withSeo' => $seo === '1', 'campaigns' => $campaigns, 'extras' => $extraLabels, 'extraDetails' => $extraDetails, 'unknown' => $unknown];
 }
 
 function site_estimate_text(array $estimate): string
@@ -217,7 +259,16 @@ function site_estimate_text(array $estimate): string
     $text = "\nПредварительный расчёт из калькулятора:\nРазработка и оценённые допработы: от " . $money($estimate['oneTime']) . " разово.\n";
     if ($estimate['withAds']) $text .= 'Реклама: от ' . $money($estimate['adsMonthly']) . '/мес.; кампаний: ' . $estimate['campaigns'] . ". Бюджет на клики отдельно.\n";
     if ($estimate['withSeo']) $text .= 'SEO: от ' . $money($estimate['seoMonthly']) . "/мес.\n";
-    if ($estimate['withAds'] || $estimate['withSeo']) $text .= 'Продвижение всего: от ' . $money($estimate['monthly']) . "/мес.\n";
+    if ($estimate['withAds'] || $estimate['withSeo'] || $estimate['hasMonthlyExtras']) $text .= ($estimate['hasMonthlyExtras'] ? 'Ежемесячно всего: от ' : 'Продвижение всего: от ') . $money($estimate['monthly']) . "/мес.\n";
+    foreach ($estimate['extraDetails'] as $extra) {
+        $detail = $extra['label'] . ': ';
+        if ($extra['amount'] === null) $detail .= 'нужна оценка';
+        elseif ($extra['type'] === 'monthly') $detail .= $money($extra['amount']) . '/мес.';
+        elseif ($extra['type'] === 'percent') $detail .= $extra['rate'] . '% от базовой цены разработки (' . $money($extra['amount']) . ')';
+        elseif ($extra['amount'] == 0) $detail .= 'бесплатно';
+        else $detail .= $money($extra['amount']) . ' разово';
+        $text .= $detail . ".\n";
+    }
     if ($estimate['extras'] !== []) $text .= 'Дополнительные задачи: ' . implode(', ', $estimate['extras']) . ".\n";
     if ($estimate['unknown'] !== []) $text .= 'Требуется оценка: ' . implode(', ', $estimate['unknown']) . ".\n";
     return $text . "Итоговые объём, стоимость и сроки согласуются отдельно.\n";

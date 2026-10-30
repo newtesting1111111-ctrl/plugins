@@ -14,9 +14,10 @@ header('Cache-Control: no-store');
   <meta name="description" content="Нужны заявки? Начнём с сайта от <?= site_e(site_money('landing')) ?>. Разработка, мобильная версия и формы. Контекстная реклама — от <?= site_e(site_money('adsMonthly')) ?>/мес., рекламный бюджет отдельно.">
   <link rel="icon" href="/favicon.svg">
   <link rel="preload" href="/fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/landing.css?v=motion-faq-calc-1">
+  <link rel="stylesheet" href="/assets/landing.css?v=refined-1">
   <script id="site-settings" type="application/json"><?= json_encode(['prices' => $settings['prices'], 'currency' => $settings['currency'], 'extras' => $settings['extras'], 'calculator' => $settings['calculator']], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?></script>
-  <script src="/assets/landing.js?v=motion-faq-calc-1" defer></script>
+  <script src="/assets/vendor/lenis.min.js?v=1.3.26" defer></script>
+  <script src="/assets/landing.js?v=refined-1" defer></script>
 </head>
 <body>
   <svg class="icon-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -44,6 +45,7 @@ header('Cache-Control: no-store');
 <symbol id="icon-shield" viewBox="0 0 24 24"><path d="m12 2 9 4v6c0 5-5 9-9 11-4-2-9-6-9-11V6l9-4Z"/><path d="m7 12 3 3 6-6"/></symbol>
 <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
 </defs></svg>
+  <?php readfile(__DIR__ . '/assets/illustrations.svg'); ?>
   <a class="skip" href="#main">К содержимому</a>
   <header class="header">
     <div class="container header-inner">
@@ -65,20 +67,8 @@ header('Cache-Control: no-store');
           <div class="hero-tags"><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-phone"/></svg> Мобильная версия</span><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-message"/></svg> Формы связи</span></div>
         </div>
         <figure class="hero-picture" aria-labelledby="hero-caption">
-          <div class="hero-studio" aria-hidden="true">
-            <div class="studio-orbit orbit-one"></div><div class="studio-orbit orbit-two"></div>
-            <div class="studio-window">
-              <div class="studio-browser"><span class="browser-dots"><i></i><i></i><i></i></span><span>ваш-сайт.by</span></div>
-              <div class="studio-window-content"><span class="studio-brand">ВАША КОМПАНИЯ<span>.</span></span><div class="studio-title">Услуга, которую<br>легко выбрать.</div><div class="studio-copy-lines"><i></i><i></i></div><span class="studio-action">Оставить заявку <svg class="icon arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M5 5h14v14"/></svg></span><div class="studio-shapes"><i></i><i></i><i></i></div></div>
-              <div class="studio-window-tiles"><i></i><i></i><i></i></div>
-            </div>
-            <div class="studio-phone"><div class="studio-phone-camera"></div><span>Ваш сайт</span><div class="studio-phone-cover"><i></i><i></i><b></b></div><div class="studio-phone-lines"><i></i><i></i></div><span class="studio-phone-action">Заявка</span><div class="studio-phone-tiles"><i></i><i></i><i></i></div></div>
-            <div class="studio-ad"><svg class="icon" viewBox="0 0 24 24"><use href="#icon-search"/></svg><span>Клиент ищет вашу услугу</span></div>
-            <div class="studio-cursor"><svg class="icon" viewBox="0 0 24 24"><use href="#icon-cursor"/></svg></div>
-            <div class="studio-lead"><span><svg class="icon" viewBox="0 0 24 24"><use href="#icon-check"/></svg></span><div><strong>Обращение с сайта</strong><span>Контакт клиента — у вас</span></div></div>
-          </div>
-          <figcaption id="hero-caption">Реклама → сайт → обращение</figcaption>
-          <button class="motion-toggle" type="button" aria-pressed="false" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-pause"/></svg><span>Остановить движение</span></button>
+          <div class="hero-studio hero-studio-lite" aria-hidden="true"><div class="hero-aurora aurora-one"></div><div class="hero-aurora aurora-two"></div><div class="hero-fine-orbit"></div><svg class="hero-linework" viewBox="0 0 640 480"><use href="#art-hero"/></svg></div>
+          <figcaption id="hero-caption">Сайт → продвижение → обращения</figcaption>
         </figure>
       </div>
     </section>
@@ -98,9 +88,9 @@ header('Cache-Control: no-store');
       <div class="container">
         <div class="section-heading split-heading"><div><span class="eyebrow">ПЕРВЫЙ ШАГ — ВАШ САЙТ</span><h2 id="price-title">Начните с подходящего формата.</h2></div><p>Цена — за разработку.<br>Продвижение подключается отдельно.</p></div>
         <div class="price-grid">
-          <article class="price-card featured"><div class="format-art landing-art" aria-hidden="true"><div class="format-browser"><span></span><div class="format-hero"><i></i><b></b></div><div class="format-row"><i></i><i></i><i></i></div></div><span class="format-art-badge">01</span></div><div class="price-content"><h3>Лендинг</h3><p>Для одной услуги и рекламы.</p><div class="price-value"><small>от</small> <?= site_e(site_price('landing')) ?> <small><?= site_e($settings['currency']) ?></small></div><a class="button primary" href="#contact" data-service="Лендинг">Рассчитать лендинг <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></article>
-          <article class="price-card"><div class="format-art company-art" aria-hidden="true"><div class="format-browser"><span></span><div class="company-cover"><i></i><b></b></div><div class="company-pages"><i></i><i></i><i></i></div></div><span class="format-art-badge">02</span></div><div class="price-content"><h3>Сайт компании</h3><p>Для нескольких направлений.</p><div class="price-value"><small>от</small> <?= site_e(site_price('company')) ?> <small><?= site_e($settings['currency']) ?></small></div><a class="button secondary" href="#contact" data-service="Сайт компании">Рассчитать сайт <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></article>
-          <article class="price-card"><div class="format-art shop-art" aria-hidden="true"><div class="format-browser"><span></span><div class="shop-products"><i></i><i></i><i></i><i></i><i></i><i></i></div></div><span class="format-art-badge">03</span></div><div class="price-content"><h3>Интернет-магазин</h3><p>Для каталога и заказов товаров.</p><div class="price-value"><small>от</small> <?= site_e(site_price('shop')) ?> <small><?= site_e($settings['currency']) ?></small></div><a class="button secondary" href="#contact" data-service="Интернет-магазин">Рассчитать магазин <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></article>
+          <article class="price-card featured"><div class="format-art landing-art" aria-hidden="true"><svg class="tariff-illustration" viewBox="0 0 640 340"><use href="#art-landing"/></svg></div><div class="price-content"><h3>Лендинг</h3><p>Для одной услуги и рекламы.</p><ul class="tariff-features"><li>Структура и оформление</li><li>Мобильная версия</li><li>Форма заявки и мессенджеры</li><li>Помощь с текстом и картинками</li><li>Размещение и доступы</li></ul><div class="price-value"><small>от</small> <?= site_e(site_price('landing')) ?> <small><?= site_e($settings['currency']) ?></small></div><a class="button primary" href="#contact" data-service="Лендинг">Рассчитать лендинг <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></article>
+          <article class="price-card"><div class="format-art company-art" aria-hidden="true"><svg class="tariff-illustration" viewBox="0 0 640 340"><use href="#art-company"/></svg></div><div class="price-content"><h3>Сайт компании</h3><p>Для нескольких направлений.</p><ul class="tariff-features"><li>Страницы компании и услуг</li><li>Понятная навигация</li><li>Мобильная версия и формы</li><li>Помощь с материалами</li><li>Размещение и доступы</li></ul><div class="price-value"><small>от</small> <?= site_e(site_price('company')) ?> <small><?= site_e($settings['currency']) ?></small></div><a class="button secondary" href="#contact" data-service="Сайт компании">Рассчитать сайт <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></article>
+          <article class="price-card"><div class="format-art shop-art" aria-hidden="true"><svg class="tariff-illustration" viewBox="0 0 640 340"><use href="#art-shop"/></svg></div><div class="price-content"><h3>Интернет-магазин</h3><p>Для каталога и заказов товаров.</p><ul class="tariff-features"><li>Каталог и карточки товаров</li><li>Корзина и оформление заказа</li><li>Мобильная версия магазина</li><li>Помощь с текстом и картинками</li><li>Размещение и доступы</li></ul><div class="price-value"><small>от</small> <?= site_e(site_price('shop')) ?> <small><?= site_e($settings['currency']) ?></small></div><a class="button secondary" href="#contact" data-service="Интернет-магазин">Рассчитать магазин <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a></div></article>
         </div>
         <div class="included-strip" aria-label="В каждом формате"><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-screen"/></svg> Дизайн</span><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-phone"/></svg> Мобильная версия</span><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-message"/></svg> Формы заявок</span><span><svg class="icon " viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-rocket"/></svg> Запуск и доступы</span></div>
         <p class="cost-note">Итог зависит от объёма. Домен, хостинг и платные интеграции оплачиваются отдельно.</p>
@@ -108,6 +98,11 @@ header('Cache-Control: no-store');
     </section>
 
 
+
+
+    <section class="section experience" aria-labelledby="experience-title">
+      <div class="container"><div class="experience-box"><div class="experience-intro"><span class="eyebrow">ПОЧЕМУ ДОСТУПНАЯ СТОИМОСТЬ</span><h2 id="experience-title">Опыт помогает<br>делать разумнее.</h2><p>Мы знаем, где оптимизировать затраты, чтобы получить хороший результат в вашем бюджете.</p><div class="experience-number"><span>Почти</span><strong>12</strong><span>лет коммерческой<br>разработки</span></div></div><div class="experience-reasons"><article><span>01</span><div><h3>Технология под задачу</h3><p>Свой код или CMS — выбираем с учётом функций, бюджета и дальнейшей работы.</p></div></article><article><span>02</span><div><h3>Проверенные решения</h3><p>Повторяющиеся задачи решаем отработанными инструментами и процессами.</p></div></article><article><span>03</span><div><h3>Меньше лишних переделок</h3><p>Согласуем структуру и основные задачи до разработки.</p></div></article><p class="experience-quality">Структура, мобильная версия и проверка форм остаются частью проекта.</p></div></div></div>
+    </section>
 
     <section class="section calculator-section" id="calculator" aria-labelledby="calculator-title">
       <div class="container"><div class="section-heading"><span class="eyebrow">СОБЕРИТЕ СВОЙ ЗАПУСК</span><h2 id="calculator-title">Прикинем бюджет?</h2><p class="calculator-intro">Выберите сайт и продвижение. Точную стоимость согласуем после обсуждения задачи.</p></div>
@@ -122,14 +117,14 @@ header('Cache-Control: no-store');
             <fieldset class="calculator-group"><legend><span>02</span> Как привлекать клиентов</legend><div class="calculator-promotions">
               <label><input type="checkbox" id="calc-ads"><span><strong>Контекстная реклама</strong><span>от <?= site_e(site_money('adsMonthly')) ?>/мес.</span></span></label>
               <label><input type="checkbox" id="calc-seo"><span><strong>SEO-продвижение</strong><span>от <?= site_e(site_money('seoMonthly')) ?>/мес.</span></span></label>
-            </div><div class="campaign-counter" id="calc-campaign-counter" hidden><label for="calc-campaigns">Рекламных кампаний</label><div><button type="button" data-campaign-delta="-1" aria-label="Уменьшить число кампаний">−</button><input id="calc-campaigns" type="number" min="1" max="<?= (int) $settings['calculator']['maxCampaigns'] ?>" value="1" inputmode="numeric"><button type="button" data-campaign-delta="1" aria-label="Увеличить число кампаний">+</button></div><p>+<?= site_e(site_money('additionalCampaign')) ?>/мес. за каждую следующую.</p></div></fieldset>
+            </div><div class="campaign-counter" id="calc-campaign-counter" hidden><label for="calc-campaigns">Рекламных кампаний</label><div><button type="button" data-campaign-delta="-1" aria-label="Уменьшить число кампаний">−</button><input id="calc-campaigns" data-lenis-prevent type="number" min="1" max="<?= (int) $settings['calculator']['maxCampaigns'] ?>" value="1" inputmode="numeric"><button type="button" data-campaign-delta="1" aria-label="Увеличить число кампаний">+</button></div><p>+<?= site_e(site_money('additionalCampaign')) ?>/мес. за каждую следующую.</p></div></fieldset>
             <fieldset class="calculator-group"><legend><span>03</span> Дополнительные задачи</legend><div class="calculator-extras">
               <?php foreach ($settings['extras'] as $id => $extra): ?>
-              <label><input type="checkbox" data-calc-extra="<?= site_e($id) ?>"><span><strong><?= site_e($extra['label']) ?></strong><span><?= $extra['price'] === null ? 'Стоимость уточним' : '+' . site_e(number_format($extra['price'], floor($extra['price']) === (float) $extra['price'] ? 0 : 2, ',', ' ') . ' ' . $settings['currency']) ?></span></span></label>
+              <label><input type="checkbox" data-calc-extra="<?= site_e($id) ?>"><span><strong><?= site_e($extra['label']) ?></strong><span><?= site_e(site_extra_rate($extra)) ?></span></span></label>
               <?php endforeach; ?>
-            </div></fieldset>
+            </div><p class="calculator-scope-note">Процентные доплаты считаются от цены выбранного формата сайта.</p></fieldset>
           </div>
-          <aside class="calculator-summary" aria-label="Предварительный расчёт"><span class="eyebrow">ОРИЕНТИР ПО БЮДЖЕТУ</span><div class="estimate-main"><span>Разработка</span><strong id="calc-one-time">от <?= site_e(site_money('landing')) ?></strong><span>разово</span></div><div class="estimate-monthly" id="calc-monthly-block" hidden><span>Продвижение</span><strong id="calc-monthly"></strong><span>в месяц</span></div><div class="calculator-breakdown" id="calc-breakdown"></div><p class="calculator-unknown" id="calc-unknown" hidden></p><p class="calculator-budget-note" id="calc-ad-budget" hidden>Бюджет на клики — отдельно.</p><a class="button primary" href="#contact" id="calculator-transfer">Перенести в заявку <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a><p class="calculator-summary-note">Выбор перенесётся в форму. Останется указать контакты.</p><span class="sr-only" id="calculator-live" role="status" aria-live="polite"></span></aside>
+          <aside class="calculator-summary" aria-label="Предварительный расчёт"><span class="eyebrow">ОРИЕНТИР ПО БЮДЖЕТУ</span><div class="estimate-main"><span>Разработка</span><strong id="calc-one-time">от <?= site_e(site_money('landing')) ?></strong><span>разово</span></div><div class="estimate-monthly" id="calc-monthly-block" hidden><span>Ежемесячно</span><strong id="calc-monthly"></strong><span>в месяц</span></div><div class="calculator-breakdown" id="calc-breakdown"></div><p class="calculator-unknown" id="calc-unknown" hidden></p><p class="calculator-budget-note" id="calc-ad-budget" hidden>Бюджет на клики — отдельно.</p><a class="button primary" href="#contact" id="calculator-transfer">Перенести в заявку <svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a><p class="calculator-summary-note">Выбор перенесётся в форму. Останется указать контакты.</p><span class="sr-only" id="calculator-live" role="status" aria-live="polite"></span></aside>
         </div>
       </div>
     </section>
@@ -151,7 +146,7 @@ header('Cache-Control: no-store');
       <div class="container"><div class="section-heading"><span class="eyebrow">КАК МЫ РАБОТАЕМ</span><h2 id="process-title">От вашей задачи — к запуску.</h2></div>
         <div class="process-box">
           <div class="process-box-top"><strong>Понятный процесс</strong><span>Сайт и его развитие</span></div>
-          <nav class="process-tabs" aria-label="Этапы работы">
+          <nav class="process-tabs" data-lenis-prevent aria-label="Этапы работы">
             <?php foreach (site_process() as $index => $step): ?>
             <a class="process-tab" id="process-tab-<?= site_e($step['id']) ?>" href="#process-panel-<?= site_e($step['id']) ?>" data-process-tab="<?= $index ?>"><span><?= sprintf('%02d', $index + 1) ?></span><?= site_e($step['tab']) ?></a>
             <?php endforeach; ?>
@@ -221,8 +216,8 @@ header('Cache-Control: no-store');
           </div>
           <div class="faq-chat" id="faq-chat" hidden>
             <div class="faq-chat-header"><span class="faq-chat-avatar" aria-hidden="true">u.</span><div><strong>uweb.by</strong><span>Готовые ответы</span></div><button class="faq-reset" type="button" aria-label="Начать диалог заново"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-reset"/></svg><span>Сначала</span></button></div>
-            <div class="faq-chat-log" id="faq-chat-log" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Вопросы и готовые ответы" tabindex="0"><div class="chat-message chat-answer chat-welcome">Здравствуйте! Здесь готовые ответы про сайты и продвижение. Выберите вопрос или напишите свой <?= isset($contactMethods['telegram']) ? 'в Telegram' : 'через контакты' ?>.</div></div>
-            <div class="faq-chat-bottom"><div class="faq-choices" aria-label="Выберите вопрос"></div>
+            <div class="faq-chat-log" data-lenis-prevent id="faq-chat-log" role="log" aria-live="polite" aria-relevant="additions text" aria-label="Вопросы и готовые ответы" tabindex="0"><div class="chat-message chat-answer chat-welcome">Здравствуйте! Здесь готовые ответы про сайты и продвижение. Выберите вопрос или напишите свой <?= isset($contactMethods['telegram']) ? 'в Telegram' : 'через контакты' ?>.</div></div>
+            <div class="faq-chat-bottom"><div class="faq-choices" data-lenis-prevent aria-label="Выберите вопрос"></div>
               <?php if (isset($contactMethods['telegram'])): ?>
               <form class="faq-question-form" id="faq-question-form" action="<?= site_e($contactMethods['telegram']['href']) ?>" method="get" target="_blank" rel="noopener noreferrer"><label class="sr-only" for="faq-custom-question">Свой вопрос в Telegram</label><input id="faq-custom-question" name="text" maxlength="1000" placeholder="Свой вопрос — в Telegram" autocomplete="off"><button type="submit" aria-label="Открыть Telegram с моим вопросом"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-telegram"/></svg></button></form>
               <?php else: ?>
@@ -243,7 +238,7 @@ header('Cache-Control: no-store');
           <label for="service">Какой сайт вам нужен?</label><select id="service" name="service"><option value="Индивидуальное решение">Помогите выбрать формат</option><option value="Лендинг">Лендинг — от <?= site_e(site_money('landing')) ?></option><option value="Сайт компании">Сайт компании — от <?= site_e(site_money('company')) ?></option><option value="Интернет-магазин">Интернет-магазин — от <?= site_e(site_money('shop')) ?></option></select>
           <label class="promotion-option" for="promotion"><input id="promotion" type="checkbox" name="promotion" value="ppc"><span>Обсудить рекламу для этого сайта</span></label>
           <div class="form-row"><div><label for="name">Ваше имя</label><input id="name" name="name" autocomplete="given-name" maxlength="80" required placeholder="Как к вам обращаться"></div><div><label for="client-contact">Контакт для ответа</label><input id="client-contact" name="contact" maxlength="160" required placeholder="Телефон или Telegram"></div></div>
-          <details class="form-more"><summary>Добавить описание задачи</summary><label class="sr-only" for="message">Пара слов о задаче</label><textarea id="message" name="message" rows="3" maxlength="3000" placeholder="Что продаёте и какой сайт нужен"></textarea></details>
+          <details class="form-more"><summary>Добавить описание задачи</summary><label class="sr-only" for="message">Пара слов о задаче</label><textarea id="message" name="message" data-lenis-prevent rows="3" maxlength="3000" placeholder="Что продаёте и какой сайт нужен"></textarea></details>
           <div class="honeypot" aria-hidden="true"><label>Не заполняйте<input name="website" tabindex="-1" autocomplete="off"></label></div>
           <button class="button primary" type="submit"><span id="submit-label">Получить расчёт</span><svg class="icon arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></button>
           <p id="form-status" role="status" aria-live="polite"></p><p class="form-note">Контакт используем для ответа на вашу заявку.</p>
@@ -259,9 +254,9 @@ header('Cache-Control: no-store');
 
   <details class="quick-contact" id="quick-contact">
     <summary class="quick-contact-toggle" aria-label="Открыть контакты" aria-controls="quick-contact-panel"><svg class="icon widget-open-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-message"/></svg><svg class="icon widget-close-icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-close"/></svg></summary>
-    <div class="quick-contact-panel" id="quick-contact-panel"><strong>Свяжитесь с нами</strong><div class="contact-method-list"><?php site_contact_cards(); ?></div></div>
+    <div class="quick-contact-panel" data-lenis-prevent id="quick-contact-panel"><strong>Свяжитесь с нами</strong><div class="contact-method-list"><?php site_contact_cards(); ?></div></div>
   </details>
-  <dialog class="contacts-dialog" id="contacts-dialog" aria-labelledby="dialog-contacts-title">
+  <dialog class="contacts-dialog" data-lenis-prevent id="contacts-dialog" aria-labelledby="dialog-contacts-title">
     <form method="dialog" class="dialog-close-form"><button class="dialog-close" type="submit" aria-label="Закрыть контакты" autofocus><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><use href="#icon-close"/></svg></button></form>
     <span class="eyebrow">ОБСУДИМ ВАШ ПРОЕКТ</span><h2 id="dialog-contacts-title">Наши контакты</h2><div class="contact-method-list"><?php site_contact_cards(); ?></div>
   </dialog>
