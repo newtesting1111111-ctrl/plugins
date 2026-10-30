@@ -776,6 +776,7 @@ html{scrollbar-gutter:stable}
 .calculator-fallback{font-size:var(--text-size);color:var(--muted)}
 .calculator-fallback a{color:#a62577;text-decoration:underline;text-underline-offset:4px}
 .calculator-box{display:grid;grid-template-columns:1.35fr .9fr;gap:34px;align-items:start;border:1px solid #e4d0df;border-radius:15px;background:#fff;padding:32px;box-shadow:0 12px 35px #78205308}
+.calculator-quick-total{display:none}
 .calculator-options{min-width:0}
 .calculator-group{padding:0;border:0;min-width:0;margin:0 0 30px}
 .calculator-group:last-child{margin-bottom:0}
@@ -931,6 +932,28 @@ html.lenis{scroll-behavior:auto!important}
 @media(max-width:360px){.hero-studio-lite{height:280px}.experience-box{padding:25px 21px}.experience-number{gap:11px}.experience-number>strong{font-size:68px}.tariff-features{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.hero-studio *{animation:none!important}.tariff-illustration{transition:none}.reveal-ready{opacity:1!important;translate:none!important;filter:none!important;transition:none!important}html{scroll-behavior:auto}}
 .calculator-scope-note{font-size:var(--text-size);line-height:1.7;color:var(--muted);margin-top:16px}
+/* Keep the estimate near the options when the calculator becomes one column. */
+@media(max-width:900px){
+ .calculator-quick-total{display:block;position:sticky;top:76px;z-index:4;min-width:0;border:1px solid #e5c8dc;border-radius:10px;background:linear-gradient(110deg,#fff8fc,#fbf5ff);padding:13px 15px;margin-bottom:24px;box-shadow:0 7px 22px #6a1a4b12}
+ .quick-total-amounts{display:flex;gap:20px}
+ .quick-total-amounts>div{flex:1;min-width:0}
+ .quick-total-amounts span{display:block;color:var(--muted);font-size:var(--text-size)}
+ .quick-total-amounts strong{display:block;color:var(--ink);font-size:20px;line-height:1.4;font-weight:650;overflow-wrap:anywhere}
+ .calculator-quick-total>p{margin-top:7px;font-size:var(--text-size);color:#9e2b75}
+ .calculator-box input,.calculator-box button{scroll-margin-top:170px}
+}
+@media(max-width:650px){.calculator-quick-total{padding:12px}.quick-total-amounts{gap:14px}.quick-total-amounts strong{font-size:16px}}
+/* The native form response shares the landing's brand and mobile type scale. */
+.form-result-page{background:var(--soft)}
+.form-result{max-width:720px;padding-block:70px}
+.form-result-card{background:#fff;border:1px solid #e7d3e1;border-radius:17px;padding:40px;box-shadow:0 15px 40px #76215b0a}
+.form-result-icon{display:grid;place-items:center;width:58px;height:58px;border:1px solid #e8cade;border-radius:16px;background:#fcf0f8;color:#ac227a}
+.form-result-icon.is-success{background:#eef9f2;color:#24734b;border-color:#cbe9d4}
+.form-result-icon .icon{width:30px;height:30px}
+.form-result h1{font-size:38px;line-height:1.2;margin:25px 0 18px}
+.form-result p{font-size:var(--text-size);line-height:1.8;color:var(--muted)}
+.form-result-actions{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:30px}
+@media(max-width:650px){.form-result{padding-block:38px}.form-result-card{padding:27px 22px;border-radius:13px}.form-result h1{font-size:24px}.form-result-actions{flex-direction:column;align-items:stretch;margin-top:25px}.form-result-actions .button{justify-content:center}}
 @media(max-width:650px){.hero-picture figcaption{padding-right:56px}}
 /* A personal first contact: the original owner portrait and an explicit commitment. */
 .hero-personal-picture{min-width:0}

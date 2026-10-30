@@ -14,10 +14,10 @@ header('Cache-Control: no-store');
   <meta name="description" content="Нужны заявки? Начнём с сайта от <?= site_e(site_money('landing')) ?>. Разработка, мобильная версия и формы. Контекстная реклама — от <?= site_e(site_money('adsMonthly')) ?>/мес., рекламный бюджет отдельно.">
   <link rel="icon" href="/favicon.svg">
   <link rel="preload" href="/fonts/golos-text-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/landing.css?v=gradient-header-1">
+  <link rel="stylesheet" href="/assets/landing.css?v=journey-1">
   <script id="site-settings" type="application/json"><?= json_encode(['prices' => $settings['prices'], 'currency' => $settings['currency'], 'extras' => $settings['extras'], 'calculator' => $settings['calculator']], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?></script>
   <script src="/assets/vendor/lenis.min.js?v=1.3.26" defer></script>
-  <script src="/assets/landing.js?v=personal-1" defer></script>
+  <script src="/assets/landing.js?v=journey-1" defer></script>
 </head>
 <body>
   <svg class="icon-defs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -115,6 +115,7 @@ header('Cache-Control: no-store');
         <p class="calculator-fallback">Для расчёта можно сразу <a href="#contact">оставить заявку</a>. Форматы и начальные цены — выше.</p>
         <div class="calculator-box" id="calculator-box" hidden>
           <div class="calculator-options">
+            <div class="calculator-quick-total" role="group" aria-label="Предварительная стоимость"><div class="quick-total-amounts"><div><span>Разово за сайт</span><strong id="calc-quick-one-time">от <?= site_e(site_money('landing')) ?></strong></div><div id="calc-quick-monthly-block" hidden><span>В месяц</span><strong id="calc-quick-monthly"></strong></div></div><p id="calc-quick-note" hidden>Часть задач оценим отдельно</p></div>
             <fieldset class="calculator-group"><legend><span>01</span> Какой сайт делаем</legend><div class="calculator-formats">
               <label><input type="radio" name="calc-format" value="Лендинг" checked><span><strong>Лендинг</strong><span>от <?= site_e(site_money('landing')) ?></span></span></label>
               <label><input type="radio" name="calc-format" value="Сайт компании"><span><strong>Сайт компании</strong><span>от <?= site_e(site_money('company')) ?></span></span></label>

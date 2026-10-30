@@ -26,15 +26,20 @@ function respond(int $status, bool $ok, string $message): void
         $fallbackContacts = site_contacts();
         $contactUrl = site_e($fallbackContacts['telegram']['href'] ?? '/#contacts');
         $contactLabel = isset($fallbackContacts['telegram']) ? 'Написать в Telegram' : 'Наши контакты';
-        echo '<!doctype html><html lang="ru"><meta charset="utf-8">'
+        $icon = $ok ? '<path d="m5 12 4 4L19 6"/>' : '<path d="M12 5v8M12 17v2"/>';
+        echo '<!doctype html><html lang="ru"><head><meta charset="utf-8">'
             . '<meta name="viewport" content="width=device-width,initial-scale=1">'
+            . '<meta name="robots" content="noindex">'
             . '<title>' . $title . ' — uweb.by</title>'
-            . '<style>body{margin:0;background:#f6f8ff;color:#202e55;font:18px/1.7 Arial,sans-serif}'
-            . 'main{max-width:600px;margin:12vh auto;padding:24px}h1{font-size:32px;line-height:1.25}'
-            . 'a{color:#425fe2;display:inline-block;margin:12px 20px 0 0}</style>'
-            . '<main><strong>uweb.by</strong><h1>' . $title . '</h1><p>' . $safeMessage . '</p>'
-            . '<a href="' . $formReturnPath . '">Вернуться на сайт</a>'
-            . '<a href="' . $contactUrl . '">' . $contactLabel . '</a></main></html>';
+            . '<link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/landing.css?v=journey-1">'
+            . '</head><body class="form-result-page"><header class="header"><div class="container header-inner">'
+            . '<a class="logo" href="/" aria-label="uweb.by — на главную">uweb<span>.</span>by</a>'
+            . '<a class="header-contact" href="/#contacts">Наши контакты</a></div></header>'
+            . '<main class="container form-result"><div class="form-result-card">'
+            . '<span class="form-result-icon' . ($ok ? ' is-success' : '') . '" aria-hidden="true"><svg class="icon" viewBox="0 0 24 24">' . $icon . '</svg></span>'
+            . '<h1>' . $title . '</h1><p>' . $safeMessage . '</p><div class="form-result-actions">'
+            . '<a class="button primary" href="' . $formReturnPath . '">Вернуться на сайт</a>'
+            . '<a class="button secondary" href="' . $contactUrl . '">' . $contactLabel . '</a></div></div></main></body></html>';
     }
     exit;
 }
@@ -83,7 +88,8 @@ $context = $data['context'] ?? 'web';
 if (!in_array($context, ['web', 'seo', 'ppc'], true)) {
     respond(422, false, 'Выберите услугу через форму на сайте.');
 }
-$formReturnPath = $context === 'web' ? '/#contact' : '/' . $context . '/#contact';
+// Cached forms from the former SEO/PPC pages must return to the single landing.
+$formReturnPath = '/#contact';
 
 // Ignore the hidden bot field without sending email or using the rate quota.
 if (trim($data['website'] ?? '') !== '') {

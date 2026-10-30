@@ -389,6 +389,10 @@ function renderCalculator() {
   document.querySelector('#calc-one-time').textContent = `от ${estimateMoney(oneTime)}`;
   document.querySelector('#calc-monthly-block').hidden = !(calcAds.checked || calcSeo.checked || hasMonthlyExtras);
   document.querySelector('#calc-monthly').textContent = `от ${estimateMoney(monthly)}`;
+  document.querySelector('#calc-quick-one-time').textContent = `от ${estimateMoney(oneTime)}`;
+  document.querySelector('#calc-quick-monthly-block').hidden = !(calcAds.checked || calcSeo.checked || hasMonthlyExtras);
+  document.querySelector('#calc-quick-monthly').textContent = `от ${estimateMoney(monthly)}`;
+  document.querySelector('#calc-quick-note').hidden = unknown.length === 0;
   document.querySelector('#calc-ad-budget').hidden = !calcAds.checked;
   const unknownNote = document.querySelector('#calc-unknown');
   unknownNote.hidden = unknown.length === 0;
